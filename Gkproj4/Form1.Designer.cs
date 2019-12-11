@@ -28,15 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.DrawArea = new System.Windows.Forms.Panel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.ButtonLightPos = new System.Windows.Forms.Button();
             this.ColorPicker = new System.Windows.Forms.Button();
-            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.InterpolationCheckBox = new System.Windows.Forms.CheckBox();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.ButtonDraw3D = new System.Windows.Forms.Button();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.ButtonStart = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -77,6 +83,9 @@
             this.flowLayoutPanel1.Controls.Add(this.ButtonLightPos);
             this.flowLayoutPanel1.Controls.Add(this.ColorPicker);
             this.flowLayoutPanel1.Controls.Add(this.InterpolationCheckBox);
+            this.flowLayoutPanel1.Controls.Add(this.ButtonDraw3D);
+            this.flowLayoutPanel1.Controls.Add(this.numericUpDown1);
+            this.flowLayoutPanel1.Controls.Add(this.ButtonStart);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(604, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(144, 523);
@@ -112,6 +121,42 @@
             this.InterpolationCheckBox.Text = "Use interpolation";
             this.InterpolationCheckBox.UseVisualStyleBackColor = true;
             // 
+            // ButtonDraw3D
+            // 
+            this.ButtonDraw3D.Location = new System.Drawing.Point(3, 142);
+            this.ButtonDraw3D.Name = "ButtonDraw3D";
+            this.ButtonDraw3D.Size = new System.Drawing.Size(141, 52);
+            this.ButtonDraw3D.TabIndex = 10;
+            this.ButtonDraw3D.Text = "Draw3D";
+            this.ButtonDraw3D.UseVisualStyleBackColor = true;
+            this.ButtonDraw3D.Click += new System.EventHandler(this.ButtonDraw3D_Click);
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(3, 200);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDown1.TabIndex = 11;
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // ButtonStart
+            // 
+            this.ButtonStart.Location = new System.Drawing.Point(3, 226);
+            this.ButtonStart.Name = "ButtonStart";
+            this.ButtonStart.Size = new System.Drawing.Size(141, 52);
+            this.ButtonStart.TabIndex = 12;
+            this.ButtonStart.Text = "Start";
+            this.ButtonStart.UseVisualStyleBackColor = true;
+            this.ButtonStart.Click += new System.EventHandler(this.ButtonStart_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -123,6 +168,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -136,6 +182,10 @@
         private System.Windows.Forms.Button ColorPicker;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.CheckBox InterpolationCheckBox;
+        private System.Windows.Forms.Button ButtonDraw3D;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button ButtonStart;
     }
 }
 

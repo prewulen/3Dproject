@@ -127,6 +127,12 @@ namespace Gkproj4
             return (count % 2 == 1);
         }
 
+        public void Fix()
+        {
+            for (int i = 0; i < points.Count; i++)
+                if (points[i].Y < 0) points[i] = new Point(points[i].X, 0);
+        }
+
         public void Add(Point p)
         {
             if (FarRight == null)

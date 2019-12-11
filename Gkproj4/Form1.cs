@@ -19,6 +19,7 @@ namespace Gkproj4
         Color LightColor = Color.White;
         Point LightP = new Point(10, 10);
         Bitmap map;
+        int time = 0;
         double LightZ = 100D;
         Color DrawColor = Color.BlueViolet;
         public Form1()
@@ -44,6 +45,8 @@ namespace Gkproj4
             p.points.Add(new Point(100, 200));
             polygons.Add(p);
         }
+
+
 
         private void ButtonLightPos_Click(object sender, EventArgs e)
         {
@@ -109,7 +112,7 @@ namespace Gkproj4
             }
         }
 
-        void FillPoly(Polygon p)
+        void FillPoly(Polygon p, Color color)
         {
             List<Color> VerticeColor = new List<Color>();
             for (int i = 0; i < p.points.Count; i++)
@@ -186,7 +189,7 @@ namespace Gkproj4
                     {
                         for (int j = xa1; j <= xa2; j++)
                         {
-                            DrawPixel(j, ystart, GetColor(j, ystart));
+                            DrawPixel(j, ystart, color);
                         }
                     }
                 }
@@ -219,29 +222,29 @@ namespace Gkproj4
 
         private void DrawArea_Paint(object sender, PaintEventArgs e)
         {
-            map = new Bitmap(DrawArea.Width, DrawArea.Height);
+            //map = new Bitmap(DrawArea.Width, DrawArea.Height);
 
-            foreach (Polygon p in polygons)
-            {
-                FillPoly(p);
-                for (int i = 0; i < p.points.Count; i++)
-                    drawVertice(p.points[i], Color.Black);
+            //foreach (Polygon p in polygons)
+            //{
+            //    FillPoly(p);
+            //    for (int i = 0; i < p.points.Count; i++)
+            //        drawVertice(p.points[i], Color.Black);
 
-                if (p.Completed)
-                {
-                    for (int i = 0; i < p.points.Count; i++)
-                    {
-                        line(p.points[i].X, p.points[i].Y, p.points[(i + 1) % p.points.Count].X, p.points[(i + 1) % p.points.Count].Y, Color.Black);
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < p.points.Count - 1; i++)
-                    {
-                        line(p.points[i].X, p.points[i].Y, p.points[(i + 1) % p.points.Count].X, p.points[(i + 1) % p.points.Count].Y, Color.Black);
-                    }
-                }
-            }
+            //    if (p.Completed)
+            //    {
+            //        for (int i = 0; i < p.points.Count; i++)
+            //        {
+            //            line(p.points[i].X, p.points[i].Y, p.points[(i + 1) % p.points.Count].X, p.points[(i + 1) % p.points.Count].Y, Color.Black);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        for (int i = 0; i < p.points.Count - 1; i++)
+            //        {
+            //            line(p.points[i].X, p.points[i].Y, p.points[(i + 1) % p.points.Count].X, p.points[(i + 1) % p.points.Count].Y, Color.Black);
+            //        }
+            //    }
+            //}
             drawVertice(LightP, Color.Red);
 
 
@@ -320,6 +323,97 @@ namespace Gkproj4
                     y += dy2;
                 }
             }
+        }
+
+        private void ButtonDraw3D_Click(object sender, EventArgs e)
+        {
+            map = new Bitmap(DrawArea.Width, DrawArea.Height);
+            Vector4 v1 = new Vector4(-1,0,-1,1);
+            Vector4 v2 = new Vector4(-1,0,1,1);
+            Vector4 v3 = new Vector4(1,0,1,1);
+            Vector4 v4 = new Vector4(1,0,-1,1);
+
+            Matrix4x4 V = Matrix4x4.GetTranslationMatrix(0,-1,-3);
+            V = Matrix4x4.MultiplyM(V, Matrix4x4.GetRotationXMatrix(Math.Cos((double)time/10 ) * 0.3));
+            V = Matrix4x4.MultiplyM(V, Matrix4x4.GetRotationYMatrix(Math.Sin((double)time/10 ) * 0.4));
+            Matrix4x4 P = Matrix4x4.GetProjectionMatrix(DrawArea.Height, DrawArea.Width);
+            Matrix4x4 m1 = Matrix4x4.MultiplyM(P, V);
+
+            DrawRectangle(v1, v2, v3, v4, Color.FromArgb(0, 255, 0), m1);
+
+
+            Matrix4x4 m2 = Matrix4x4.MultiplyM(m1, Matrix4x4.GetTranslationMatrix(0, 2, 0));
+
+            DrawRectangle(v1, v2, v3, v4, Color.FromArgb(0, 255, 0), m2);
+
+
+            Matrix4x4 m3 = Matrix4x4.MultiplyM(m1, Matrix4x4.GetTranslationMatrix(1,1,0));
+            m3 = Matrix4x4.MultiplyM(m3, Matrix4x4.GetRotationZMatrix(Math.PI / 2));
+
+            DrawRectangle(v1, v2, v3, v4, Color.FromArgb(255,0,0), m3);
+
+
+            Matrix4x4 m4 = Matrix4x4.MultiplyM(m1, Matrix4x4.GetTranslationMatrix(-1, 1, 0));
+            m4 = Matrix4x4.MultiplyM(m4, Matrix4x4.GetRotationZMatrix(Math.PI / 2));
+
+            DrawRectangle(v1, v2, v3, v4, Color.FromArgb(255, 0, 0), m4);
+
+
+            Matrix4x4 m5 = Matrix4x4.MultiplyM(m1, Matrix4x4.GetTranslationMatrix(0,1,-1));
+            m5 = Matrix4x4.MultiplyM(m5, Matrix4x4.GetRotationXMatrix(Math.PI / 2));
+
+            DrawRectangle(v1, v2, v3, v4, Color.FromArgb(0,0,255), m5);
+
+
+            Matrix4x4 m6 = Matrix4x4.MultiplyM(m1, Matrix4x4.GetTranslationMatrix(0,1,0.5));
+            m6 = Matrix4x4.MultiplyM(m6, Matrix4x4.GetRotationYMatrix(0.4));
+            m6 = Matrix4x4.MultiplyM(m6, Matrix4x4.GetRotationXMatrix(Math.PI/2));
+            m6 = Matrix4x4.MultiplyM(m6, Matrix4x4.GetScaleMatrix(0.5,0.5,0.25));
+            m6 = Matrix4x4.MultiplyM(m6, Matrix4x4.GetRotationYMatrix(Math.PI / 4));
+            
+            DrawRectangle(v1, v2, v3, v4, Color.FromArgb(255,255,0), m6);
+
+            DrawArea.Refresh();
+        }
+
+        private void DrawRectangle(Vector4 v1, Vector4 v2, Vector4 v3, Vector4 v4, Color c, Matrix4x4 m)
+        {
+            Vector4 c1 = Matrix4x4.MultiplyV(m, v1);
+            Vector4 c2 = Matrix4x4.MultiplyV(m, v2);
+            Vector4 c3 = Matrix4x4.MultiplyV(m, v3);
+            Vector4 c4 = Matrix4x4.MultiplyV(m, v4);
+
+            Vector4 n1 = new Vector4(c1.vector[0] / c1.vector[3], c1.vector[1] / c1.vector[3], c1.vector[2] / c1.vector[3], 1);
+            Vector4 n2 = new Vector4(c2.vector[0] / c2.vector[3], c2.vector[1] / c2.vector[3], c2.vector[2] / c2.vector[3], 1);
+            Vector4 n3 = new Vector4(c3.vector[0] / c3.vector[3], c3.vector[1] / c3.vector[3], c3.vector[2] / c3.vector[3], 1);
+            Vector4 n4 = new Vector4(c4.vector[0] / c4.vector[3], c4.vector[1] / c4.vector[3], c4.vector[2] / c4.vector[3], 1);
+
+            Polygon p = new Polygon();
+            p.Completed = true;
+            p.points.Add(new Point((int)(((n1.vector[0] / 2) + 0.5) * DrawArea.Width), (int)(((-n1.vector[1] / 2) + 0.5) * DrawArea.Height)));
+            p.points.Add(new Point((int)(((n2.vector[0] / 2) + 0.5) * DrawArea.Width), (int)(((-n2.vector[1] / 2) + 0.5) * DrawArea.Height)));
+            p.points.Add(new Point((int)(((n3.vector[0] / 2) + 0.5) * DrawArea.Width), (int)(((-n3.vector[1] / 2) + 0.5) * DrawArea.Height)));
+            p.points.Add(new Point((int)(((n4.vector[0] / 2) + 0.5) * DrawArea.Width), (int)(((-n4.vector[1] / 2) + 0.5) * DrawArea.Height)));
+
+            p.Fix();
+
+            FillPoly(p, c);
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (time == int.MaxValue)
+                time = 0;
+            time++;
+            ButtonDraw3D_Click(null, null);
+        }
+
+        private void ButtonStart_Click(object sender, EventArgs e)
+        {
+            if (timer1.Enabled)
+                timer1.Enabled = false;
+            else
+                timer1.Enabled = true;
         }
     }
 }
