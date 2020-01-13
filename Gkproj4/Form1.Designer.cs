@@ -35,11 +35,13 @@
             this.ButtonLightPos = new System.Windows.Forms.Button();
             this.ColorPicker = new System.Windows.Forms.Button();
             this.InterpolationCheckBox = new System.Windows.Forms.CheckBox();
-            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.ButtonDraw3D = new System.Windows.Forms.Button();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.ButtonStart = new System.Windows.Forms.Button();
+            this.labelFps = new System.Windows.Forms.Label();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -80,6 +82,7 @@
             this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.flowLayoutPanel1.Controls.Add(this.labelFps);
             this.flowLayoutPanel1.Controls.Add(this.ButtonLightPos);
             this.flowLayoutPanel1.Controls.Add(this.ColorPicker);
             this.flowLayoutPanel1.Controls.Add(this.InterpolationCheckBox);
@@ -93,7 +96,7 @@
             // 
             // ButtonLightPos
             // 
-            this.ButtonLightPos.Location = new System.Drawing.Point(3, 3);
+            this.ButtonLightPos.Location = new System.Drawing.Point(3, 16);
             this.ButtonLightPos.Name = "ButtonLightPos";
             this.ButtonLightPos.Size = new System.Drawing.Size(141, 52);
             this.ButtonLightPos.TabIndex = 2;
@@ -103,7 +106,7 @@
             // 
             // ColorPicker
             // 
-            this.ColorPicker.Location = new System.Drawing.Point(3, 61);
+            this.ColorPicker.Location = new System.Drawing.Point(3, 74);
             this.ColorPicker.Name = "ColorPicker";
             this.ColorPicker.Size = new System.Drawing.Size(141, 52);
             this.ColorPicker.TabIndex = 8;
@@ -114,7 +117,7 @@
             // InterpolationCheckBox
             // 
             this.InterpolationCheckBox.AutoSize = true;
-            this.InterpolationCheckBox.Location = new System.Drawing.Point(3, 119);
+            this.InterpolationCheckBox.Location = new System.Drawing.Point(3, 132);
             this.InterpolationCheckBox.Name = "InterpolationCheckBox";
             this.InterpolationCheckBox.Size = new System.Drawing.Size(105, 17);
             this.InterpolationCheckBox.TabIndex = 9;
@@ -123,7 +126,7 @@
             // 
             // ButtonDraw3D
             // 
-            this.ButtonDraw3D.Location = new System.Drawing.Point(3, 142);
+            this.ButtonDraw3D.Location = new System.Drawing.Point(3, 155);
             this.ButtonDraw3D.Name = "ButtonDraw3D";
             this.ButtonDraw3D.Size = new System.Drawing.Size(141, 52);
             this.ButtonDraw3D.TabIndex = 10;
@@ -133,7 +136,7 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(3, 200);
+            this.numericUpDown1.Location = new System.Drawing.Point(3, 213);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -143,19 +146,35 @@
             this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown1.TabIndex = 11;
             // 
-            // timer1
-            // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
             // ButtonStart
             // 
-            this.ButtonStart.Location = new System.Drawing.Point(3, 226);
+            this.ButtonStart.Location = new System.Drawing.Point(3, 239);
             this.ButtonStart.Name = "ButtonStart";
             this.ButtonStart.Size = new System.Drawing.Size(141, 52);
             this.ButtonStart.TabIndex = 12;
             this.ButtonStart.Text = "Start";
             this.ButtonStart.UseVisualStyleBackColor = true;
             this.ButtonStart.Click += new System.EventHandler(this.ButtonStart_Click);
+            // 
+            // labelFps
+            // 
+            this.labelFps.AutoSize = true;
+            this.labelFps.Location = new System.Drawing.Point(3, 0);
+            this.labelFps.Name = "labelFps";
+            this.labelFps.Size = new System.Drawing.Size(24, 13);
+            this.labelFps.TabIndex = 13;
+            this.labelFps.Text = "fps:";
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 15;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // timer2
+            // 
+            this.timer2.Enabled = true;
+            this.timer2.Interval = 1000;
+            this.timer2.Tick += new System.EventHandler(this.Timer2_Tick);
             // 
             // Form1
             // 
@@ -186,6 +205,8 @@
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button ButtonStart;
+        private System.Windows.Forms.Label labelFps;
+        private System.Windows.Forms.Timer timer2;
     }
 }
 

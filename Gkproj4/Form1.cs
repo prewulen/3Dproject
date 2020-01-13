@@ -22,6 +22,9 @@ namespace Gkproj4
         int time = 0;
         double LightZ = 100D;
         Color DrawColor = Color.BlueViolet;
+
+        DateTime _lastCheckTime = DateTime.Now;
+        long _frameCount = 0;
         public Form1()
         {
             InitializeComponent();
@@ -250,6 +253,7 @@ namespace Gkproj4
 
 
             e.Graphics.DrawImage(map, 0, 0);
+            _frameCount++;
         }
 
         Color GetColor(int x, int y)
@@ -333,9 +337,8 @@ namespace Gkproj4
             Vector4 v3 = new Vector4(1,0,1,1);
             Vector4 v4 = new Vector4(1,0,-1,1);
 
-            Matrix4x4 V = Matrix4x4.GetTranslationMatrix(0,-1,-3);
-            V = Matrix4x4.MultiplyM(V, Matrix4x4.GetRotationXMatrix(Math.Cos((double)time/10 ) * 0.3));
-            V = Matrix4x4.MultiplyM(V, Matrix4x4.GetRotationYMatrix(Math.Sin((double)time/10 ) * 0.4));
+            Matrix4x4 V = Matrix4x4.GetTranslationMatrix(0,-1,-5);
+            V = Matrix4x4.MultiplyM(V, Matrix4x4.GetRotationYMatrix(((double)time / 10)));
             Matrix4x4 P = Matrix4x4.GetProjectionMatrix(DrawArea.Height, DrawArea.Width);
             Matrix4x4 m1 = Matrix4x4.MultiplyM(P, V);
 
@@ -414,6 +417,15 @@ namespace Gkproj4
                 timer1.Enabled = false;
             else
                 timer1.Enabled = true;
+        }
+
+        private void Timer2_Tick(object sender, EventArgs e)
+        {
+            double secondsElapsed = (DateTime.Now - _lastCheckTime).TotalSeconds;
+            double fps = _frameCount / secondsElapsed;
+            _frameCount = 0;
+            labelFps.Text = "fps: " + ((int)fps).ToString();
+            _lastCheckTime = DateTime.Now;
         }
     }
 }
