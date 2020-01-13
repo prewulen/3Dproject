@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gkproj4
 {
-    class Vector4
+    public class Vector4
     {
         public double[] vector = new double[4];
         public Vector4() { }

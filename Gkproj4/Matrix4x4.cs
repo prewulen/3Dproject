@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gkproj4
 {
-    class Matrix4x4
+   public class Matrix4x4
     {
         public double[,] matrix = new double[4, 4];
 

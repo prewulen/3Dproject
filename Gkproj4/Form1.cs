@@ -13,70 +13,37 @@ namespace Gkproj4
 {
     public partial class Form1 : Form
     {
-        public enum Mode { AddPolygon, Move, Delete, Light }
-        List<Polygon> polygons = new List<Polygon>();
-        Mode CurrentMode;
-        Color LightColor = Color.White;
-        Point LightP = new Point(10, 10);
         Bitmap map;
         int time = 0;
-        double LightZ = 100D;
-        Color DrawColor = Color.BlueViolet;
-
         DateTime _lastCheckTime = DateTime.Now;
         long _frameCount = 0;
+
         public Form1()
         {
             InitializeComponent();
 
-            CurrentMode = Mode.Light;
-            ColorPicker.BackColor = Color.White;
             this.DoubleBuffered = true;
             typeof(Panel).InvokeMember("DoubleBuffered",
             BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
             null, DrawArea, new object[] { true });
             map = new Bitmap(DrawArea.Width, DrawArea.Height);
-            Polygon p = new Polygon();
-            p.Completed = true;
-            p.points.Add(new Point(150, 150));
-            p.points.Add(new Point(200, 150));
-            p.points.Add(new Point(250, 200));
-            p.points.Add(new Point(250, 250));
-            p.points.Add(new Point(200, 300));
-            p.points.Add(new Point(150, 300));
-            p.points.Add(new Point(100, 250));
-            p.points.Add(new Point(100, 200));
-            polygons.Add(p);
         }
 
 
 
-        private void ButtonLightPos_Click(object sender, EventArgs e)
-        {
-            CurrentMode = Mode.Light;
-        }
 
-        private void ColorPicker_Click(object sender, EventArgs e)
-        {
-            DialogResult result = colorDialog1.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                ColorPicker.BackColor = colorDialog1.Color;
-                LightColor = colorDialog1.Color;
-            }
-            DrawArea.Refresh();
-        }
+        //private void ColorPicker_Click(object sender, EventArgs e)
+        //{
+        //    DialogResult result = colorDialog1.ShowDialog();
+        //    if (result == DialogResult.OK)
+        //    {
+        //        ColorPicker.BackColor = colorDialog1.Color;
+        //        LightColor = colorDialog1.Color;
+        //    }
+        //    DrawArea.Refresh();
+        //}
 
-        private void DrawArea_MouseDown(object sender, MouseEventArgs e)
-        {
-            switch (CurrentMode)
-            {
-                case Mode.Light:
-                    LightP = e.Location;
-                    break;
-            }
-            DrawArea.Refresh();
-        }
+     
 
         void DrawPixel(int x, int y, Color c)
         {
@@ -225,33 +192,6 @@ namespace Gkproj4
 
         private void DrawArea_Paint(object sender, PaintEventArgs e)
         {
-            //map = new Bitmap(DrawArea.Width, DrawArea.Height);
-
-            //foreach (Polygon p in polygons)
-            //{
-            //    FillPoly(p);
-            //    for (int i = 0; i < p.points.Count; i++)
-            //        drawVertice(p.points[i], Color.Black);
-
-            //    if (p.Completed)
-            //    {
-            //        for (int i = 0; i < p.points.Count; i++)
-            //        {
-            //            line(p.points[i].X, p.points[i].Y, p.points[(i + 1) % p.points.Count].X, p.points[(i + 1) % p.points.Count].Y, Color.Black);
-            //        }
-            //    }
-            //    else
-            //    {
-            //        for (int i = 0; i < p.points.Count - 1; i++)
-            //        {
-            //            line(p.points[i].X, p.points[i].Y, p.points[(i + 1) % p.points.Count].X, p.points[(i + 1) % p.points.Count].Y, Color.Black);
-            //        }
-            //    }
-            //}
-            drawVertice(LightP, Color.Red);
-
-
-
             e.Graphics.DrawImage(map, 0, 0);
             _frameCount++;
         }
