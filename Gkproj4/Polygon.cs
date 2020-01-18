@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Gkproj4
 {
-    class Polygon
+    public class Polygon
     {
         public List<Point> points;
         public bool Completed = false;
