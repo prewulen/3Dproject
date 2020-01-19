@@ -27,6 +27,7 @@ namespace Gkproj4
         Vector4 MoveVectorX;
         Vector4 MoveVectorY;
         GroupBox GB;
+        double[,] ZBuffer;
 
         public Form1()
         {
@@ -37,30 +38,30 @@ namespace Gkproj4
             BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
             null, DrawArea, new object[] { true });
             map = new Bitmap(DrawArea.Width, DrawArea.Height);
-            Camera C = new Camera(new Vector4(2, 0.5, 2, 1), new Vector4(0, 0, 0, 1), null);
+            Camera C = new Camera(new Vector4(0, 0, 8, 1), new Vector4(0, 0, 0, 1), null);
             SceneObjectList.Add(C);
             listBox1.Items.Add(C);
-            Camera C1 = new Camera(new Vector4(0, -3, 1, 1), new Vector4(0, 0, 0, 1), null);
+            Camera C1 = new Camera(new Vector4(0, 8, 0, 1), new Vector4(0, 0, 0, 1), null);
             SceneObjectList.Add(C1);
             listBox1.Items.Add(C1);
-            Camera C2 = new Camera(new Vector4(0, 0, 3, 1), new Vector4(0, 0, 0, 1), null);
+            Camera C2 = new Camera(new Vector4(8, 0, 0, 1), new Vector4(0, 0, 0, 1), null);
             SceneObjectList.Add(C2);
             listBox1.Items.Add(C2);
             Camera C3 = new Camera(new Vector4(3, 0, 0, 1), new Vector4(0, 0, 0, 1), null);
             SceneObjectList.Add(C3);
             listBox1.Items.Add(C3);
-            Light L1 = new Light(new Vector4(0, 2, 0, 1), Color.White, 1, 1);
+            Light L1 = new Light(new Vector4(1, 1, 0, 1), Color.White, 1, 1);
             SceneObjectList.Add(L1);
             listBox1.Items.Add(L1);
             SelectedCamera = C;
             //Cuboid Cb = new Cuboid(new Vector4(0, 0, 0, 1), new Vector4(0, 0, 0, 0), 1, 1, 1.5, 1);
             //SceneObjectList.Add(Cb);
-            Cuboid Cb1 = new Cuboid(new Vector4(2, 0, 0, 1), new Vector4(0, 0, 0, 0), 1, 1, 1.5, 1);
+            Cuboid Cb1 = new Cuboid(new Vector4(0, 0, 0, 1), new Vector4(0, 0, 0, 0), 1, 1, 1, 1);
             SceneObjectList.Add(Cb1);
             listBox1.Items.Add(Cb1);
-            Sphere s = new Sphere(new Vector4(0, 0, 0, 1), 1, 15, 15);
-            SceneObjectList.Add(s);
-            listBox1.Items.Add(s);
+            //Sphere s = new Sphere(new Vector4(0, 0, 0, 1), 1, 15, 15);
+            //SceneObjectList.Add(s);
+            //listBox1.Items.Add(s);
 
             comboBox1.Items.Add("Camera");
             comboBox1.Items.Add("Light");
@@ -70,33 +71,22 @@ namespace Gkproj4
             comboBox1.Items.Add("Cone");
             comboBox1.SelectedIndex = 0;
 
+            
+
             //TestDraw();
             //DrawArea.Refresh();
 
         }
 
 
-        private void TestDraw()
-        {
-            Polygon p = new Polygon() { Completed = true };
-            p.Add(new Point(50, 50));
-            p.Add(new Point(150, 150));
-            p.Add(new Point(50, 150));
-            FillPoly(p, Color.Red);
-        }
-
-        //private void ColorPicker_Click(object sender, EventArgs e)
+        //private void TestDraw()
         //{
-        //    DialogResult result = colorDialog1.ShowDialog();
-        //    if (result == DialogResult.OK)
-        //    {
-        //        ColorPicker.BackColor = colorDialog1.Color;
-        //        LightColor = colorDialog1.Color;
-        //    }
-        //    DrawArea.Refresh();
+        //    Polygon p = new Polygon() { Completed = true };
+        //    p.Add(new Point(50, 50));
+        //    p.Add(new Point(150, 150));
+        //    p.Add(new Point(50, 150));
+        //    FillPoly(p, Color.Red);
         //}
-
-     
 
         void DrawPixel(int x, int y, Color c)
         {
@@ -135,8 +125,10 @@ namespace Gkproj4
             }
         }
 
-        void FillPoly(Polygon p, Color color)
+        void FillPoly(Polygon p)
         {
+
+
             List<Color> VerticeColor = new List<Color>();
             for (int i = 0; i < p.points.Count; i++)
             {
@@ -197,24 +189,16 @@ namespace Gkproj4
                 {
                     int xa1 = (int)AET[i].x + 1;
                     int xa2 = (int)AET[i + 1].x;
-                    //if (InterpolationCheckBox.Checked)
-                    //{
-                        Color Left = InterpolateColor(p.points[AET[i].p1], p.points[AET[i].p2], xa1, ystart + 1, VerticeColor[AET[i].p1], VerticeColor[AET[i].p2]);
-                        Color Right = InterpolateColor(p.points[AET[i + 1].p1], p.points[AET[i + 1].p2], xa2, ystart + 1, VerticeColor[AET[i + 1].p1], VerticeColor[AET[i + 1].p2]);
-                        DrawPixel(xa1, ystart, Left);
-                        DrawPixel(xa2, ystart, Right);
-                        for (int j = xa1 + 1; j < xa2; j++)
-                        {
-                            DrawPixel(j, ystart, InterpolateColorL(xa1, xa2, j, Left, Right));
-                        }
-                    //}
-                    //else
-                    //{
-                    //    for (int j = xa1; j <= xa2; j++)
-                    //    {
-                    //        DrawPixel(j, ystart, color);
-                    //    }
-                    //}
+
+                    Color Left = InterpolateColor(p.points[AET[i].p1], p.points[AET[i].p2], xa1, ystart + 1, VerticeColor[AET[i].p1], VerticeColor[AET[i].p2]);
+                    Color Right = InterpolateColor(p.points[AET[i + 1].p1], p.points[AET[i + 1].p2], xa2, ystart + 1, VerticeColor[AET[i + 1].p1], VerticeColor[AET[i + 1].p2]);
+                    DrawPixel(xa1, ystart, Left);
+                    DrawPixel(xa2, ystart, Right);
+                    for (int j = xa1 + 1; j < xa2; j++)
+                    {
+                        DrawPixel(j, ystart, InterpolateColorL(xa1, xa2, j, Left, Right));
+                    }
+
                 }
                 ystart++;
                 AET.RemoveAll(x1 => x1.ymax == ystart);
@@ -224,11 +208,99 @@ namespace Gkproj4
                 }
             }
         }
+        
+        void FillPoly(Polygon p, Triangle T, Bitmap TextureMap, Bitmap BumpMap)
+        {
 
+
+            List<Color> VerticeColor = new List<Color>();
+            VerticeColor.Add(T.x1Color);
+            VerticeColor.Add(T.x2Color);
+            VerticeColor.Add(T.x3Color);
+
+            EdgePointer[] ET = new EdgePointer[2000];
+            int ymin, ymax, x, ystart = p.points[0].Y;
+            double m;
+            int count = p.points.Count;
+            int p1, p2;
+            for (int i = 0; i < p.points.Count; i++)
+            {
+                p1 = i;
+                p2 = (i + 1) % p.points.Count;
+                ymin = p.points[i].Y;
+                ymax = p.points[(i + 1) % p.points.Count].Y;
+                x = p.points[i].X;
+                m = (double)(ymin - ymax) / (double)(x - p.points[(i + 1) % p.points.Count].X);
+                m = 1 / m;
+                if (ymax < ymin)
+                {
+                    int t = ymin;
+                    ymin = ymax;
+                    ymax = t;
+                    x = p.points[(i + 1) % p.points.Count].X;
+                    p1 = p2;
+                    p2 = i;
+                }
+                else if (ymax == ymin)
+                {
+                    count--;
+                    continue;
+                }
+                if (ET[ymin] == null) ET[ymin] = new EdgePointer(ymax, x, m, null, p1, p2);
+                else
+                {
+                    EdgePointer pt = ET[ymin];
+                    while (pt.next != null)
+                        pt = pt.next;
+                    pt.next = new EdgePointer(ymax, x, m, null, p1, p2);
+                }
+                if (ystart > ymin) ystart = ymin;
+            }
+
+            List<EdgePointer> AET = new List<EdgePointer>();
+            while ((count != 0 || AET.Count != 0) && ystart < DrawArea.Height)
+            {
+                EdgePointer pty = ET[ystart];
+                while (pty != null)
+                {
+                    AET.Add(pty);
+                    pty = pty.next;
+                    count--;
+                }
+                AET.Sort((x1, x2) => (int)(x1.x - x2.x));
+                for (int i = 0; i < AET.Count; i += 2)
+                {
+                    int xa1 = (int)AET[i].x + 1;
+                    int xa2 = (int)AET[i + 1].x;
+
+                    Color Left = InterpolateColor(p.points[AET[i].p1], p.points[AET[i].p2], xa1, ystart + 1, VerticeColor[AET[i].p1], VerticeColor[AET[i].p2]);
+                    Color Right = InterpolateColor(p.points[AET[i + 1].p1], p.points[AET[i + 1].p2], xa2, ystart + 1, VerticeColor[AET[i + 1].p1], VerticeColor[AET[i + 1].p2]);
+                    DrawPixel(xa1, ystart, Left);
+                    DrawPixel(xa2, ystart, Right);
+                    for (int j = xa1 + 1; j < xa2; j++)
+                    {
+                        DrawPixel(j, ystart, InterpolateColorL(xa1, xa2, j, Left, Right));
+                    }
+
+                }
+                ystart++;
+                AET.RemoveAll(x1 => x1.ymax == ystart);
+                foreach (var e in AET)
+                {
+                    e.x += e.m;
+                }
+            }
+        }
         Color InterpolateColor(Point p1, Point p2, int x, int y, Color Left, Color Right)
         {
             double d1 = (p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y);
             double d2 = (x - p1.X) * (x - p1.X) + (y - p1.Y) * (y - p1.Y);
+            if(d1<d2)
+            {
+                double d3 = d1;
+                d1 = d2;
+                d2 = d3;
+            }
             double ratio;
             if (d2 < 1e-5) ratio = 1;
             else ratio = d2 / d1;
@@ -333,6 +405,13 @@ namespace Gkproj4
         private void ButtonDraw3D_Click(object sender, EventArgs e)
         {
             map = new Bitmap(DrawArea.Width, DrawArea.Height);
+            if (ZBufferCheckBox.Checked)
+            {
+                ZBuffer = new double[DrawArea.Width, DrawArea.Height];
+                for (int i = 0; i < DrawArea.Width; i++)
+                    for (int j = 0; j < DrawArea.Height; j++)
+                        ZBuffer[i, j] = -1;
+            }
 
             SelectedCamera.AspectRatio = (double)DrawArea.Width / (double)DrawArea.Height;
             Vector4 D = new Vector4(
@@ -361,12 +440,17 @@ namespace Gkproj4
 
             foreach (SceneObject so in SceneObjectList)
             {
-                if (so.ObjectType == SceneObject.ObjectTypeEnum.Camera || so.ObjectType == SceneObject.ObjectTypeEnum.Light) continue;
+                if (so.ObjectType == SceneObject.ObjectTypeEnum.Camera) continue;
                 Matrix4x4 M = Matrix4x4.MultiplyM(M1, Matrix4x4.GetTranslationMatrix(so.Position.vector[0], so.Position.vector[1], so.Position.vector[2]));
+                if (so.ObjectType == SceneObject.ObjectTypeEnum.Light)
+                {
+                    DrawLightVertice(so, M);
+                    continue;
+                }
                 M = Matrix4x4.MultiplyM(M, Matrix4x4.GetRotationXMatrix(so.Rotation.vector[0]));
                 M = Matrix4x4.MultiplyM(M, Matrix4x4.GetRotationYMatrix(so.Rotation.vector[1]));
                 M = Matrix4x4.MultiplyM(M, Matrix4x4.GetRotationZMatrix(so.Rotation.vector[2]));
-                M = Matrix4x4.MultiplyM(M, Matrix4x4.GetScaleMatrix(so.Scale, so.Scale, so.Scale));
+                //M = Matrix4x4.MultiplyM(M, Matrix4x4.GetScaleMatrix(so.Scale, so.Scale, so.Scale));
 
                 foreach(Triangle t in so.Triangles())
                 {
@@ -379,7 +463,7 @@ namespace Gkproj4
                     }
                     else
                     {
-                        DrawTriangle(t.x1, t.x2, t.x3, Color.Red);
+                        DrawTriangle(t);
                     }
                 }
             }
@@ -420,7 +504,7 @@ namespace Gkproj4
 
             p.Fix();
 
-            FillPoly(p, c);
+            //FillPoly(p, c);
         }
         private void DrawTriangle(Vector4 v1, Vector4 v2, Vector4 v3, Color c)
         {
@@ -441,28 +525,82 @@ namespace Gkproj4
 
             p.Fix();
 
-            FillPoly(p, c);
+            //FillPoly(p, c);
         }
         private void DrawTriangle(Triangle t)
         {
             
-            t.x1 = new Vector4(t.x1.vector[0] / t.x1.vector[3], t.x1.vector[1] / t.x1.vector[3], t.x1.vector[2] / t.x1.vector[3], 1);
-            t.x2 = new Vector4(t.x2.vector[0] / t.x2.vector[3], t.x2.vector[1] / t.x2.vector[3], t.x2.vector[2] / t.x2.vector[3], 1);
-            t.x3 = new Vector4(t.x3.vector[0] / t.x3.vector[3], t.x3.vector[1] / t.x3.vector[3], t.x3.vector[2] / t.x3.vector[3], 1);
+            Vector4 v1 =   new Vector4(t.x1.vector[0] / t.x1.vector[3], t.x1.vector[1] / t.x1.vector[3], t.x1.vector[2] / t.x1.vector[3], 1);
+            Vector4 v2 =   new Vector4(t.x2.vector[0] / t.x2.vector[3], t.x2.vector[1] / t.x2.vector[3], t.x2.vector[2] / t.x2.vector[3], 1);
+            Vector4 v3 =   new Vector4(t.x3.vector[0] / t.x3.vector[3], t.x3.vector[1] / t.x3.vector[3], t.x3.vector[2] / t.x3.vector[3], 1);
 
-            if (BackFaceCull(t.x1, t.x2, t.x3))
+            if (BackFaceCull(v1, v2, v3))
                 return;
+
+            //todo: Mapowanie normalnych
+
+            t.x1Color = GetColor(t.x1, t.x1N);
+            t.x2Color = GetColor(t.x2, t.x2N);
+            t.x3Color = GetColor(t.x3, t.x3N);
+
+            t.x1 = v1;
+            t.x2 = v2;
+            t.x3 = v3;
 
             Polygon p = new Polygon();
             p.Completed = true;
-            p.points.Add(new Point((int)(((n1.vector[0] / 2) + 0.5) * DrawArea.Width), (int)(((-n1.vector[1] / 2) + 0.5) * DrawArea.Height)));
-            p.points.Add(new Point((int)(((n2.vector[0] / 2) + 0.5) * DrawArea.Width), (int)(((-n2.vector[1] / 2) + 0.5) * DrawArea.Height)));
-            p.points.Add(new Point((int)(((n3.vector[0] / 2) + 0.5) * DrawArea.Width), (int)(((-n3.vector[1] / 2) + 0.5) * DrawArea.Height)));
-
-
+            p.points.Add(new Point((int)(((t.x1.vector[0] / 2) + 0.5) * DrawArea.Width), (int)(((-t.x1.vector[1] / 2) + 0.5) * DrawArea.Height)));
+            p.points.Add(new Point((int)(((t.x2.vector[0] / 2) + 0.5) * DrawArea.Width), (int)(((-t.x2.vector[1] / 2) + 0.5) * DrawArea.Height)));
+            p.points.Add(new Point((int)(((t.x3.vector[0] / 2) + 0.5) * DrawArea.Width), (int)(((-t.x3.vector[1] / 2) + 0.5) * DrawArea.Height)));
             p.Fix();
 
-            FillPoly(p, c);
+            FillPoly(p, t, null, null);
+        }
+        private void DrawLightVertice(SceneObject S, Matrix4x4 M)
+        {
+            Vector4 lpos = Matrix4x4.MultiplyV(M, S.Position);
+            Vector4 v1 =   new Vector4(lpos.vector[0] / lpos.vector[3], lpos.vector[1] / lpos.vector[3], lpos.vector[2] / lpos.vector[3], 1);
+            drawVertice(new Point((int)(((v1.vector[0] / 2) + 0.5) * DrawArea.Width), (int)(((-v1.vector[1] / 2) + 0.5) * DrawArea.Height)), Color.Red);
+        }
+        private Color GetColor(Vector4 v, Vector4 vN)
+        {
+            double Red = 0, Green = 0, Blue = 0;
+            double AmbientRatio = 0.33;
+            double DiffuseRatio = 0.33;
+            double SpecularRatio = 0.1;
+            Color DiffuseColor = Color.Blue;
+            Color AmbientLight = Color.FromArgb(15, 15, 15);
+            Color SpecularLight = Color.FromArgb(255, 255, 255);
+            Red = AmbientRatio * (AmbientLight.R / 255D);
+            Green = AmbientRatio * (AmbientLight.G / 255D);
+            Blue = AmbientRatio * (AmbientLight.B / 255D);
+            foreach(Light L in SceneObjectList.OfType<Light>())
+            {
+                DiffuseColor = L.LightColor;
+                SpecularLight = L.LightColor;
+                Vector4 Li = L.Position - v;
+                Li.Normalize();
+                Vector4 R = Vector4.Cross(Li, vN);
+                R = R * 2;
+                R = Vector4.Cross(R, vN);
+                R = R - Li;
+                Vector4 V = SelectedCamera.Position - v;
+                V.Normalize();
+                Vector4 LiN = Vector4.Cross(Li, vN);
+                LiN.Normalize();
+                Vector4 RV = Vector4.Cross(R, V);
+                RV.Normalize();
+                Red = Red + ((DiffuseColor.R / 255D) * DiffuseRatio * LiN.vector[0]) + ((SpecularLight.R / 255D) * SpecularRatio * RV.vector[0]);
+                Green = Green + ((DiffuseColor.G / 255D) * DiffuseRatio * LiN.vector[1]) + ((SpecularLight.G / 255D) * SpecularRatio * RV.vector[1]);
+                Blue = Blue + ((DiffuseColor.B / 255D) * DiffuseRatio * LiN.vector[2]) + ((SpecularLight.B / 255D) * SpecularRatio * RV.vector[2]);
+            }
+            if (Red < 0) Red = 0;
+            if (Green < 0) Green = 0;
+            if (Blue < 0) Blue = 0;
+            return Color.FromArgb(
+                ((int)(Red * 255) % 255),
+                ((int)(Green * 255) % 255),
+                ((int)(Blue * 255) % 255));
         }
         private void DrawTriangleLines(Vector4 v1, Vector4 v2, Vector4 v3, Color c)
         {
@@ -550,7 +688,7 @@ namespace Gkproj4
                                 SceneObjectList[listBox1.SelectedIndex].Position.vector[0] += ((e.X - LastMouseX) / 500);
                                 break;
                             case (MouseButtons.Middle):
-                                SceneObjectList[listBox1.SelectedIndex].Position.vector[1] += ((e.Y - LastMouseY) / 500);
+                                SceneObjectList[listBox1.SelectedIndex].Position.vector[1] += (-(e.Y - LastMouseY) / 500);
                                 break;
                             case (MouseButtons.Right):
                                 SceneObjectList[listBox1.SelectedIndex].Position.vector[2] += ((e.X - LastMouseX) / 500);
@@ -584,9 +722,9 @@ namespace Gkproj4
                         if (e.Button == MouseButtons.Middle)
                         {
                             Matrix4x4 m = Matrix4x4.GetTranslationMatrix(
-                                ((-(e.X - LastMouseX) * MoveVectorX.vector[0]) / 100) + (((e.Y - LastMouseY) * MoveVectorY.vector[0]) / 100),
-                                ((-(e.X - LastMouseX) * MoveVectorX.vector[1]) / 100) + (((e.Y - LastMouseY) * MoveVectorY.vector[1]) / 100),
-                                ((-(e.X - LastMouseX) * MoveVectorX.vector[2]) / 100) + (((e.Y - LastMouseY) * MoveVectorY.vector[2]) / 100));
+                                (((e.X - LastMouseX) * MoveVectorX.vector[0]) / 100) + ((-(e.Y - LastMouseY) * MoveVectorY.vector[0]) / 100),
+                                (((e.X - LastMouseX) * MoveVectorX.vector[1]) / 100) + ((-(e.Y - LastMouseY) * MoveVectorY.vector[1]) / 100),
+                                (((e.X - LastMouseX) * MoveVectorX.vector[2]) / 100) + ((-(e.Y - LastMouseY) * MoveVectorY.vector[2]) / 100));
                             SelectedCamera.Position = Matrix4x4.MultiplyV(m, SelectedCamera.Position);
                             SelectedCamera.Target = Matrix4x4.MultiplyV(m, SelectedCamera.Target);
                         }
@@ -594,8 +732,8 @@ namespace Gkproj4
                         {
                             Vector4 P = SelectedCamera.Position;
                             Vector4 T = SelectedCamera.Target - P;
-                            Matrix4x4 M = Matrix4x4.GetRotationAxisMatrix(((e.Y - LastMouseY) / 500), MoveVectorX);
-                            M = Matrix4x4.MultiplyM(M, Matrix4x4.GetRotationAxisMatrix(((e.X - LastMouseX) / 500), MoveVectorY));
+                            Matrix4x4 M = Matrix4x4.GetRotationAxisMatrix((-(e.Y - LastMouseY) / 500), MoveVectorX);
+                            M = Matrix4x4.MultiplyM(M, Matrix4x4.GetRotationAxisMatrix((-(e.X - LastMouseX) / 500), MoveVectorY));
                             T = Matrix4x4.MultiplyV(M, T);
                             T = T + P;
                             T.vector[3] = 1;
@@ -645,7 +783,7 @@ namespace Gkproj4
             GB.Controls.Add(new Label() { Text = "fov", Location = new Point(6, 16), Size = new Size(60, 15) });
 
             TrackBar TB = new TrackBar();
-            TB.Maximum = 300;
+            TB.Maximum = 180;
             TB.Minimum = 10;
             TB.Value = (int)(SelectedCamera.fov * 100);
             TB.Location = new Point(3, 37);

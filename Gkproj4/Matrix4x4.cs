@@ -59,9 +59,9 @@ namespace Gkproj4
             double ctg = 1 / Math.Tan(fov / 2);
             output.matrix[0, 0] = ctg / aspect;
             output.matrix[1, 1] = ctg;
-            output.matrix[2, 2] = (far + near) / (far - near);
-            output.matrix[2, 3] = (-2D * far * near) / (far - near);
-            output.matrix[3, 2] = 1D;
+            output.matrix[2, 2] = -(far + near) / (far - near);
+            output.matrix[2, 3] = (2D * far * near) / (far - near);
+            output.matrix[3, 2] = -1D;
 
             return output;
         }
@@ -204,7 +204,5 @@ namespace Gkproj4
 
             return output;
         }
-
-        
     }
 }

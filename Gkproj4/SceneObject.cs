@@ -115,23 +115,180 @@ namespace Gkproj4
 
             double w = Width / 2, h = Height / 2, d = Depth / 2;
 
-            p.Add(new Triangle(new Vector4(w, -h, d, 1), new Vector4(w, h, d, 1),  new Vector4(-w, -h, d, 1)));
-            p.Add(new Triangle(new Vector4(-w, -h, d, 1), new Vector4(w, h, d, 1),  new Vector4(-w, h, d, 1)));
+            p.Add(new Triangle(
+                new Vector4(w, -h, d, 1),  //x1
+                new Vector4(0, 0, 1, 0),  //x1N
+                new Vector4(0, 0, 0, 0),  //x1TC
+                new Vector4(0, 0, 1, 0),  //x1NMV
+                new Vector4(w, h, d, 1),   //x2
+                new Vector4(0, 0, 1, 0),   //x2N
+                new Vector4(0, 1, 0, 0),   //x2TC
+                new Vector4(0, 0, 1, 0),   //x2NMV
+                new Vector4(-w, -h, d, 1), //x3
+                new Vector4(0, 0, 1, 0), //x3N
+                new Vector4(1, 0, 0, 0), //x3TC
+                new Vector4(0, 0, 1, 0)  //x3NMV
+                ));
+            p.Add(new Triangle(
+                new Vector4(-w, -h, d, 1),  //x1
+                new Vector4(0, 0, 1, 0),  //x1N
+                new Vector4(1, 0, 0, 0),  //x1TC
+                new Vector4(0, 0, 1, 0),  //x1NMV
+                new Vector4(w, h, d, 1),   //x2
+                new Vector4(0, 0, 1, 0),   //x2N
+                new Vector4(0, 1, 0, 0),   //x2TC
+                new Vector4(0, 0, 1, 0),   //x2NMV
+                new Vector4(-w, h, d, 1), //x3
+                new Vector4(0, 0, 1, 0), //x3N
+                new Vector4(1, 1, 0, 0), //x3TC
+                new Vector4(0, 0, 1, 0)  //x3NMV
+                ));
 
-            p.Add(new Triangle(new Vector4(w, -h, -d, 1), new Vector4(w, h, -d, 1),  new Vector4(w, -h, d, 1)));
-            p.Add(new Triangle(new Vector4(w, -h, d, 1), new Vector4(w, h, -d, 1),  new Vector4(w, h, d, 1)));
 
-            p.Add(new Triangle(new Vector4(-w, -h, -d, 1), new Vector4(-w, h, -d, 1), new Vector4(w, -h, -d, 1)));
-            p.Add(new Triangle(new Vector4(w, -h, -d, 1), new Vector4(-w, h, -d, 1),  new Vector4(w, h, -d, 1)));
+            p.Add(new Triangle(
+                new Vector4(w, -h, -d, 1),  //x1
+                new Vector4(1, 0, 0, 0),  //x1N
+                new Vector4(0, 0, 0, 0),  //x1TC
+                new Vector4(1, 0, 0, 0),  //x1NMV
+                new Vector4(w, h, -d, 1),   //x2
+                new Vector4(1, 0, 0, 0),   //x2N
+                new Vector4(0, 1, 0, 0),   //x2TC
+                new Vector4(1, 0, 0, 0),   //x2NMV
+                new Vector4(w, -h, d, 1), //x3
+                new Vector4(1, 0, 0, 0), //x3N
+                new Vector4(1, 0, 0, 0), //x3TC
+                new Vector4(1, 0, 0, 0)  //x3NMV
+                ));
+            p.Add(new Triangle(
+                new Vector4(w, -h, d, 1),  //x1
+                new Vector4(1, 0, 0, 0),  //x1N
+                new Vector4(1, 0, 0, 0),  //x1TC
+                new Vector4(1, 0, 0, 0),  //x1NMV
+                new Vector4(w, h, -d, 1),   //x2
+                new Vector4(1, 0, 0, 0),   //x2N
+                new Vector4(0, 1, 0, 0),   //x2TC
+                new Vector4(1, 0, 0, 0),   //x2NMV
+                new Vector4(w, h, d, 1), //x3
+                new Vector4(1, 0, 0, 0), //x3N
+                new Vector4(1, 1, 0, 0), //x3TC
+                new Vector4(1, 0, 0, 0)  //x3NMV
+                ));
 
-            p.Add(new Triangle(new Vector4(-w, -h, d, 1), new Vector4(-w, h, d, 1),  new Vector4(-w, -h, -d, 1)));
-            p.Add(new Triangle(new Vector4(-w, -h, -d, 1), new Vector4(-w, h, d, 1),  new Vector4(-w, h, -d, 1)));
+            p.Add(new Triangle(
+                new Vector4(-w, -h, -d, 1),  //x1
+                new Vector4(0, 0, -1, 0),  //x1N
+                new Vector4(0, 0, 0, 0),  //x1TC
+                new Vector4(0, 0, -1, 0),  //x1NMV
+                new Vector4(-w, h, -d, 1),   //x2
+                new Vector4(0, 0, -1, 0),   //x2N
+                new Vector4(0, 1, 0, 0),   //x2TC
+                new Vector4(0, 0, -1, 0),   //x2NMV
+                new Vector4(w, -h, -d, 1), //x3
+                new Vector4(0, 0, -1, 0), //x3N
+                new Vector4(1, 0, 0, 0), //x3TC
+                new Vector4(0, 0, -1, 0)  //x3NMV
+                ));
+            p.Add(new Triangle(
+                new Vector4(w, -h, -d, 1),  //x1
+                new Vector4(0, 0, -1, 0),  //x1N
+                new Vector4(1, 0, 0, 0),  //x1TC
+                new Vector4(0, 0, -1, 0),  //x1NMV
+                new Vector4(-w, h, -d, 1),   //x2
+                new Vector4(0, 0, -1, 0),   //x2N
+                new Vector4(0, 1, 0, 0),   //x2TC
+                new Vector4(0, 0, -1, 0),   //x2NMV
+                new Vector4(w, h, -d, 1), //x3
+                new Vector4(0, 0, -1, 0), //x3N
+                new Vector4(1, 1, 0, 0), //x3TC
+                new Vector4(0, 0, -1, 0)  //x3NMV
+                ));
 
-            p.Add(new Triangle(new Vector4(-w, h, d, 1), new Vector4(w, h, d, 1), new Vector4(-w, h, -d, 1)));
-            p.Add(new Triangle(new Vector4(-w, h, -d, 1), new Vector4(w, h, d, 1),  new Vector4(w, h, -d, 1)));
+            p.Add(new Triangle(
+                new Vector4(-w, -h, d, 1),  //x1
+                new Vector4(-1, 0, 0, 0),  //x1N
+                new Vector4(0, 0, 0, 0),  //x1TC
+                new Vector4(-1, 0, 0, 0),  //x1NMV
+                new Vector4(-w, h, d, 1),   //x2
+                new Vector4(-1, 0, 0, 0),   //x2N
+                new Vector4(0, 1, 0, 0),   //x2TC
+                new Vector4(-1, 0, 0, 0),   //x2NMV
+                new Vector4(-w, -h, -d, 1), //x3
+                new Vector4(-1, 0, 0, 0), //x3N
+                new Vector4(1, 0, 0, 0), //x3TC
+                new Vector4(-1, 0, 0, 0)  //x3NMV
+                ));
+            p.Add(new Triangle(
+                new Vector4(-w, -h, -d, 1),  //x1
+                new Vector4(-1, 0, 0, 0),  //x1N
+                new Vector4(1, 0, 0, 0),  //x1TC
+                new Vector4(-1, 0, 0, 0),  //x1NMV
+                new Vector4(-w, h, d, 1),   //x2
+                new Vector4(-1, 0, 0, 0),   //x2N
+                new Vector4(0, 1, 0, 0),   //x2TC
+                new Vector4(-1, 0, 0, 0),   //x2NMV
+                new Vector4(-w, h, -d, 1), //x3
+                new Vector4(-1, 0, 0, 0), //x3N
+                new Vector4(1, 1, 0, 0), //x3TC
+                new Vector4(-1, 0, 0, 0)  //x3NMV
+                ));
 
-            p.Add(new Triangle(new Vector4(w, -h, d, 1), new Vector4(-w, -h, d, 1),  new Vector4(-w, -h, -d, 1)));
-            p.Add(new Triangle(new Vector4(w, -h, d, 1), new Vector4(-w, -h, -d, 1), new Vector4(w, -h, -d, 1)));
+            p.Add(new Triangle(
+                new Vector4(-w, h, d, 1),  //x1
+                new Vector4(0, 1, 0, 0),  //x1N
+                new Vector4(0, 0, 0, 0),  //x1TC
+                new Vector4(0, 1, 0, 0),  //x1NMV
+                new Vector4(w, h, d, 1),   //x2
+                new Vector4(0, 1, 0, 0),   //x2N
+                new Vector4(0, 1, 0, 0),   //x2TC
+                new Vector4(0, 1, 0, 0),   //x2NMV
+                new Vector4(-w, h, -d, 1), //x3
+                new Vector4(0, 1, 0, 0), //x3N
+                new Vector4(1, 0, 0, 0), //x3TC
+                new Vector4(0, 1, 0, 0)  //x3NMV
+                ));
+            p.Add(new Triangle(
+                new Vector4(-w, h, -d, 1),  //x1
+                new Vector4(0, 1, 0, 0),  //x1N
+                new Vector4(1, 0, 0, 0),  //x1TC
+                new Vector4(0, 1, 0, 0),  //x1NMV
+                new Vector4(w, h, d, 1),   //x2
+                new Vector4(0, 1, 0, 0),   //x2N
+                new Vector4(0, 1, 0, 0),   //x2TC
+                new Vector4(0, 1, 0, 0),   //x2NMV
+                new Vector4(w, h, -d, 1), //x3
+                new Vector4(0, 1, 0, 0), //x3N
+                new Vector4(1, 1, 0, 0), //x3TC
+                new Vector4(0, 1, 0, 0)  //x3NMV
+                ));
+
+            p.Add(new Triangle(
+                new Vector4(w, -h, d, 1),  //x1
+                new Vector4(0, -1, 0, 0),  //x1N
+                new Vector4(0, 0, 0, 0),  //x1TC
+                new Vector4(0, -1, 0, 0),  //x1NMV
+                new Vector4(-w, -h, d, 1),   //x2
+                new Vector4(0, -1, 0, 0),   //x2N
+                new Vector4(0, 1, 0, 0),   //x2TC
+                new Vector4(0, -1, 0, 0),   //x2NMV
+                new Vector4(-w, -h, -d, 1), //x3
+                new Vector4(0, -1, 0, 0), //x3N
+                new Vector4(1, 0, 0, 0), //x3TC
+                new Vector4(0, -1, 0, 0)  //x3NMV
+                ));
+            p.Add(new Triangle(
+                new Vector4(w, -h, d, 1),  //x1
+                new Vector4(0, -1, 0, 0),  //x1N
+                new Vector4(1, 0, 0, 0),  //x1TC
+                new Vector4(0, -1, 0, 0),  //x1NMV
+                new Vector4(-w, -h, -d, 1),   //x2
+                new Vector4(0, -1, 0, 0),   //x2N
+                new Vector4(0, 1, 0, 0),   //x2TC
+                new Vector4(0, -1, 0, 0),   //x2NMV
+                new Vector4(w, -h, -d, 1), //x3
+                new Vector4(0, -1, 0, 0), //x3N
+                new Vector4(1, 1, 0, 0), //x3TC
+                new Vector4(0, -1, 0, 0)  //x3NMV
+                ));
 
             return p;
         }
@@ -175,31 +332,94 @@ namespace Gkproj4
             {
                 for (double j = 0; j < Math.PI * 2; j = j + d2)
                 {
-                    p.Add(new Triangle(new Vector4(Radius * Math.Sin(i) * Math.Cos(j), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j), 1),
-                       new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j + d2), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j + d2), 1),
-                       new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j), 1)));
+                    //p.Add(new Triangle(new Vector4(Radius * Math.Sin(i) * Math.Cos(j), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j), 1),
+                    //   new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j + d2), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j + d2), 1),
+                    //   new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j), 1)));
+                    p.Add(new Triangle(
+                            new Vector4(Radius * Math.Sin(i) * Math.Cos(j), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j), 1),  //x1
+                            Vector4.Normalize(new Vector4(Radius * Math.Sin(i) * Math.Cos(j), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j), 1)),  //x1N
+                            new Vector4((i) / Math.PI, (j) / (Math.PI * 2), 0, 0),  //x1TC
+                            Vector4.Normalize(new Vector4(Radius * Math.Sin(i) * Math.Cos(j), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j), 1)),  //x1NMV
+
+                            new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j + d2), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j + d2), 1),   //x2
+                            Vector4.Normalize(new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j + d2), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j + d2), 1)),   //x2N
+                            new Vector4((i+d1) / Math.PI, (j+d2) / (Math.PI * 2), 0, 0),   //x2TC
+                            Vector4.Normalize(new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j + d2), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j + d2), 1)),   //x2NMV
+
+                            new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j), 1), //x3
+                            Vector4.Normalize(new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j), 1)), //x3N
+                            new Vector4((i + d1) / Math.PI, (j) / (Math.PI * 2), 0, 0), //x3TC
+                            Vector4.Normalize(new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j), 1))  //x3NMV
+                            ));
                 }
             }
             for (double i = d1; i < Math.PI - d1; i = i + d1)
             {
                 for (double j = 0; j < Math.PI * 2; j = j + d2)
                 {
-                    p.Add(new Triangle(new Vector4(Radius * Math.Sin(i) * Math.Cos(j + d2), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j + d2), 1),
-                        new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j + d2), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j + d2), 1),
-                        new Vector4(Radius * Math.Sin(i) * Math.Cos(j), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j), 1)));
+                    //p.Add(new Triangle(new Vector4(Radius * Math.Sin(i) * Math.Cos(j + d2), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j + d2), 1),
+                    //    new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j + d2), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j + d2), 1),
+                    //    new Vector4(Radius * Math.Sin(i) * Math.Cos(j), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j), 1)));
+                    p.Add(new Triangle(
+                            new Vector4(Radius * Math.Sin(i) * Math.Cos(j + d2), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j + d2), 1),  //x1
+                            Vector4.Normalize(new Vector4(Radius * Math.Sin(i) * Math.Cos(j + d2), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j + d2), 1)),  //x1N
+                            new Vector4((i) / Math.PI, (j + d2) / (Math.PI * 2), 0, 0),  //x1TC
+                            Vector4.Normalize(new Vector4(Radius * Math.Sin(i) * Math.Cos(j + d2), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j + d2), 1)),  //x1NMV
 
-                    p.Add(new Triangle(new Vector4(Radius * Math.Sin(i) * Math.Cos(j), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j), 1),
-                        new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j + d2), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j + d2), 1),
-                        new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j), 1)));
+                            new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j + d2), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j + d2), 1),   //x2
+                            Vector4.Normalize(new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j + d2), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j + d2), 1)),   //x2N
+                            new Vector4((i + d1) / Math.PI, (j + d2) / (Math.PI * 2), 0, 0),   //x2TC
+                            Vector4.Normalize(new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j + d2), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j + d2), 1)),   //x2NMV
+
+                            new Vector4(Radius * Math.Sin(i) * Math.Cos(j), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j), 1),  //x1
+                            Vector4.Normalize(new Vector4(Radius * Math.Sin(i) * Math.Cos(j), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j), 1)),  //x1N
+                            new Vector4((i) / Math.PI, (j) / (Math.PI * 2), 0, 0),  //x1TC
+                            Vector4.Normalize(new Vector4(Radius * Math.Sin(i) * Math.Cos(j), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j), 1))  //x1NMV
+                            ));
+                    //p.Add(new Triangle(new Vector4(Radius * Math.Sin(i) * Math.Cos(j), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j), 1),
+                    //    new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j + d2), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j + d2), 1),
+                    //    new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j), 1)));
+                    p.Add(new Triangle(
+                            new Vector4(Radius * Math.Sin(i) * Math.Cos(j), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j), 1),  //x1
+                            Vector4.Normalize(new Vector4(Radius * Math.Sin(i) * Math.Cos(j), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j), 1)),  //x1N
+                            new Vector4((i) / Math.PI, (j) / (Math.PI * 2), 0, 0),  //x1TC
+                            Vector4.Normalize(new Vector4(Radius * Math.Sin(i) * Math.Cos(j), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j), 1)),  //x1NMV
+
+                            new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j + d2), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j + d2), 1),   //x2
+                            Vector4.Normalize(new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j + d2), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j + d2), 1)),   //x2N
+                            new Vector4((i + d1) / Math.PI, (j + d2) / (Math.PI * 2), 0, 0),   //x2TC
+                            Vector4.Normalize(new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j + d2), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j + d2), 1)),   //x2NMV
+
+                            new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j), 1),  //x1
+                            Vector4.Normalize(new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j), 1)),  //x1N
+                            new Vector4((i + d1) / Math.PI, (j) / (Math.PI * 2), 0, 0),  //x1TC
+                            Vector4.Normalize(new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j), 1))  //x1NMV
+                            ));
                 }
             }
             for (double i = Math.PI - d1; i != Math.PI; i = i + d1)
             {
                 for (double j = 0; j < Math.PI * 2; j = j + d2)
                 {
-                    p.Add(new Triangle(new Vector4(Radius * Math.Sin(i) * Math.Cos(j + d2), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j + d2), 1),
-                        new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j + d2), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j + d2), 1),
-                        new Vector4(Radius * Math.Sin(i) * Math.Cos(j), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j), 1)));
+                    //p.Add(new Triangle(new Vector4(Radius * Math.Sin(i) * Math.Cos(j + d2), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j + d2), 1),
+                    //    new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j + d2), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j + d2), 1),
+                    //    new Vector4(Radius * Math.Sin(i) * Math.Cos(j), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j), 1)));
+                    p.Add(new Triangle(
+                            new Vector4(Radius * Math.Sin(i) * Math.Cos(j + d2), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j + d2), 1),  //x1
+                            Vector4.Normalize(new Vector4(Radius * Math.Sin(i) * Math.Cos(j + d2), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j + d2), 1)),  //x1N
+                            new Vector4((i) / Math.PI, (j + d2) / (Math.PI * 2), 0, 0),  //x1TC
+                            Vector4.Normalize(new Vector4(Radius * Math.Sin(i) * Math.Cos(j + d2), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j + d2), 1)),  //x1NMV
+
+                            new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j + d2), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j + d2), 1),   //x2
+                            Vector4.Normalize(new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j + d2), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j + d2), 1)),   //x2N
+                            new Vector4((i + d1) / Math.PI, (j + d2) / (Math.PI * 2), 0, 0),   //x2TC
+                            Vector4.Normalize(new Vector4(Radius * Math.Sin(i + d1) * Math.Cos(j + d2), Radius * Math.Cos(i + d1), Radius * Math.Sin(i + d1) * Math.Sin(j + d2), 1)),   //x2NMV
+
+                            new Vector4(Radius * Math.Sin(i) * Math.Cos(j), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j), 1),  //x1
+                            Vector4.Normalize(new Vector4(Radius * Math.Sin(i) * Math.Cos(j), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j), 1)),  //x1N
+                            new Vector4((i) / Math.PI, (j) / (Math.PI * 2), 0, 0),  //x1TC
+                            Vector4.Normalize(new Vector4(Radius * Math.Sin(i) * Math.Cos(j), Radius * Math.Cos(i), Radius * Math.Sin(i) * Math.Sin(j), 1))  //x1NMV
+                            ));
                 }
             }
 

@@ -44,7 +44,7 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.BackfaceCullCheckBox = new System.Windows.Forms.CheckBox();
-            this.ZBufforCheckBox = new System.Windows.Forms.CheckBox();
+            this.ZBufferCheckBox = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -88,7 +88,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.Controls.Add(this.labelFps);
             this.flowLayoutPanel1.Controls.Add(this.BackfaceCullCheckBox);
-            this.flowLayoutPanel1.Controls.Add(this.ZBufforCheckBox);
+            this.flowLayoutPanel1.Controls.Add(this.ZBufferCheckBox);
             this.flowLayoutPanel1.Controls.Add(this.LineFillCheckbox);
             this.flowLayoutPanel1.Controls.Add(this.ButtonDraw3D);
             this.flowLayoutPanel1.Controls.Add(this.ButtonStart);
@@ -202,17 +202,17 @@
             this.BackfaceCullCheckBox.Text = "Use backface culling";
             this.BackfaceCullCheckBox.UseVisualStyleBackColor = true;
             // 
-            // ZBufforCheckBox
+            // ZBufferCheckBox
             // 
-            this.ZBufforCheckBox.AutoSize = true;
-            this.ZBufforCheckBox.Checked = true;
-            this.ZBufforCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ZBufforCheckBox.Location = new System.Drawing.Point(3, 39);
-            this.ZBufforCheckBox.Name = "ZBufforCheckBox";
-            this.ZBufforCheckBox.Size = new System.Drawing.Size(83, 17);
-            this.ZBufforCheckBox.TabIndex = 20;
-            this.ZBufforCheckBox.Text = "Use z-buffor";
-            this.ZBufforCheckBox.UseVisualStyleBackColor = true;
+            this.ZBufferCheckBox.AutoSize = true;
+            this.ZBufferCheckBox.Checked = true;
+            this.ZBufferCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ZBufferCheckBox.Location = new System.Drawing.Point(3, 39);
+            this.ZBufferCheckBox.Name = "ZBufferCheckBox";
+            this.ZBufferCheckBox.Size = new System.Drawing.Size(83, 17);
+            this.ZBufferCheckBox.TabIndex = 20;
+            this.ZBufferCheckBox.Text = "Use z-buffer";
+            this.ZBufferCheckBox.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -246,7 +246,7 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button ButtonAddNewItem;
         private System.Windows.Forms.CheckBox BackfaceCullCheckBox;
-        private System.Windows.Forms.CheckBox ZBufforCheckBox;
+        private System.Windows.Forms.CheckBox ZBufferCheckBox;
     }
 }
 
