@@ -33,6 +33,8 @@
             this.DrawArea = new System.Windows.Forms.Panel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.labelFps = new System.Windows.Forms.Label();
+            this.BackfaceCullCheckBox = new System.Windows.Forms.CheckBox();
+            this.ZBufferCheckBox = new System.Windows.Forms.CheckBox();
             this.LineFillCheckbox = new System.Windows.Forms.CheckBox();
             this.ButtonDraw3D = new System.Windows.Forms.Button();
             this.ButtonStart = new System.Windows.Forms.Button();
@@ -43,8 +45,8 @@
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
-            this.BackfaceCullCheckBox = new System.Windows.Forms.CheckBox();
-            this.ZBufferCheckBox = new System.Windows.Forms.CheckBox();
+            this.SaveSceneButton = new System.Windows.Forms.Button();
+            this.LoadSceneButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -63,7 +65,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1071, 769);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1214, 908);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // DrawArea
@@ -74,7 +76,7 @@
             this.DrawArea.BackColor = System.Drawing.SystemColors.ControlLight;
             this.DrawArea.Location = new System.Drawing.Point(3, 3);
             this.DrawArea.Name = "DrawArea";
-            this.DrawArea.Size = new System.Drawing.Size(915, 763);
+            this.DrawArea.Size = new System.Drawing.Size(1058, 902);
             this.DrawArea.TabIndex = 1;
             this.DrawArea.Paint += new System.Windows.Forms.PaintEventHandler(this.DrawArea_Paint);
             this.DrawArea.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DrawArea_MouseDown);
@@ -90,15 +92,17 @@
             this.flowLayoutPanel1.Controls.Add(this.BackfaceCullCheckBox);
             this.flowLayoutPanel1.Controls.Add(this.ZBufferCheckBox);
             this.flowLayoutPanel1.Controls.Add(this.LineFillCheckbox);
+            this.flowLayoutPanel1.Controls.Add(this.LoadSceneButton);
+            this.flowLayoutPanel1.Controls.Add(this.SaveSceneButton);
             this.flowLayoutPanel1.Controls.Add(this.ButtonDraw3D);
             this.flowLayoutPanel1.Controls.Add(this.ButtonStart);
             this.flowLayoutPanel1.Controls.Add(this.listBox1);
             this.flowLayoutPanel1.Controls.Add(this.RemoveItemButton);
             this.flowLayoutPanel1.Controls.Add(this.comboBox1);
             this.flowLayoutPanel1.Controls.Add(this.ButtonAddNewItem);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(924, 3);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(1067, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(144, 763);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(144, 902);
             this.flowLayoutPanel1.TabIndex = 2;
             // 
             // labelFps
@@ -109,86 +113,6 @@
             this.labelFps.Size = new System.Drawing.Size(24, 13);
             this.labelFps.TabIndex = 13;
             this.labelFps.Text = "fps:";
-            // 
-            // LineFillCheckbox
-            // 
-            this.LineFillCheckbox.AutoSize = true;
-            this.LineFillCheckbox.Checked = true;
-            this.LineFillCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.LineFillCheckbox.Location = new System.Drawing.Point(3, 62);
-            this.LineFillCheckbox.Name = "LineFillCheckbox";
-            this.LineFillCheckbox.Size = new System.Drawing.Size(136, 17);
-            this.LineFillCheckbox.TabIndex = 15;
-            this.LineFillCheckbox.Text = "Draw lines instead of fill";
-            this.LineFillCheckbox.UseVisualStyleBackColor = true;
-            // 
-            // ButtonDraw3D
-            // 
-            this.ButtonDraw3D.Location = new System.Drawing.Point(3, 85);
-            this.ButtonDraw3D.Name = "ButtonDraw3D";
-            this.ButtonDraw3D.Size = new System.Drawing.Size(141, 52);
-            this.ButtonDraw3D.TabIndex = 10;
-            this.ButtonDraw3D.Text = "Draw3D";
-            this.ButtonDraw3D.UseVisualStyleBackColor = true;
-            this.ButtonDraw3D.Click += new System.EventHandler(this.ButtonDraw3D_Click);
-            // 
-            // ButtonStart
-            // 
-            this.ButtonStart.Location = new System.Drawing.Point(3, 143);
-            this.ButtonStart.Name = "ButtonStart";
-            this.ButtonStart.Size = new System.Drawing.Size(141, 52);
-            this.ButtonStart.TabIndex = 12;
-            this.ButtonStart.Text = "Start";
-            this.ButtonStart.UseVisualStyleBackColor = true;
-            this.ButtonStart.Click += new System.EventHandler(this.ButtonStart_Click);
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(3, 201);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(141, 173);
-            this.listBox1.TabIndex = 14;
-            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.ListBox1_SelectedIndexChanged);
-            // 
-            // RemoveItemButton
-            // 
-            this.RemoveItemButton.Location = new System.Drawing.Point(3, 380);
-            this.RemoveItemButton.Name = "RemoveItemButton";
-            this.RemoveItemButton.Size = new System.Drawing.Size(141, 52);
-            this.RemoveItemButton.TabIndex = 16;
-            this.RemoveItemButton.Text = "Remove selected item";
-            this.RemoveItemButton.UseVisualStyleBackColor = true;
-            this.RemoveItemButton.Click += new System.EventHandler(this.RemoveItemButton_Click);
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(3, 438);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(141, 21);
-            this.comboBox1.TabIndex = 17;
-            // 
-            // ButtonAddNewItem
-            // 
-            this.ButtonAddNewItem.Location = new System.Drawing.Point(3, 465);
-            this.ButtonAddNewItem.Name = "ButtonAddNewItem";
-            this.ButtonAddNewItem.Size = new System.Drawing.Size(141, 52);
-            this.ButtonAddNewItem.TabIndex = 18;
-            this.ButtonAddNewItem.Text = "Add new item";
-            this.ButtonAddNewItem.UseVisualStyleBackColor = true;
-            this.ButtonAddNewItem.Click += new System.EventHandler(this.ButtonAddNewItem_Click);
-            // 
-            // timer1
-            // 
-            this.timer1.Interval = 15;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // timer2
-            // 
-            this.timer2.Enabled = true;
-            this.timer2.Interval = 1000;
-            this.timer2.Tick += new System.EventHandler(this.Timer2_Tick);
             // 
             // BackfaceCullCheckBox
             // 
@@ -214,11 +138,111 @@
             this.ZBufferCheckBox.Text = "Use z-buffer";
             this.ZBufferCheckBox.UseVisualStyleBackColor = true;
             // 
+            // LineFillCheckbox
+            // 
+            this.LineFillCheckbox.AutoSize = true;
+            this.LineFillCheckbox.Checked = true;
+            this.LineFillCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.LineFillCheckbox.Location = new System.Drawing.Point(3, 62);
+            this.LineFillCheckbox.Name = "LineFillCheckbox";
+            this.LineFillCheckbox.Size = new System.Drawing.Size(136, 17);
+            this.LineFillCheckbox.TabIndex = 15;
+            this.LineFillCheckbox.Text = "Draw lines instead of fill";
+            this.LineFillCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // ButtonDraw3D
+            // 
+            this.ButtonDraw3D.Location = new System.Drawing.Point(3, 201);
+            this.ButtonDraw3D.Name = "ButtonDraw3D";
+            this.ButtonDraw3D.Size = new System.Drawing.Size(141, 52);
+            this.ButtonDraw3D.TabIndex = 10;
+            this.ButtonDraw3D.Text = "Draw3D";
+            this.ButtonDraw3D.UseVisualStyleBackColor = true;
+            this.ButtonDraw3D.Click += new System.EventHandler(this.ButtonDraw3D_Click);
+            // 
+            // ButtonStart
+            // 
+            this.ButtonStart.Location = new System.Drawing.Point(3, 259);
+            this.ButtonStart.Name = "ButtonStart";
+            this.ButtonStart.Size = new System.Drawing.Size(141, 52);
+            this.ButtonStart.TabIndex = 12;
+            this.ButtonStart.Text = "Start";
+            this.ButtonStart.UseVisualStyleBackColor = true;
+            this.ButtonStart.Click += new System.EventHandler(this.ButtonStart_Click);
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(3, 317);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(141, 173);
+            this.listBox1.TabIndex = 14;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.ListBox1_SelectedIndexChanged);
+            // 
+            // RemoveItemButton
+            // 
+            this.RemoveItemButton.Location = new System.Drawing.Point(3, 496);
+            this.RemoveItemButton.Name = "RemoveItemButton";
+            this.RemoveItemButton.Size = new System.Drawing.Size(141, 52);
+            this.RemoveItemButton.TabIndex = 16;
+            this.RemoveItemButton.Text = "Remove selected item";
+            this.RemoveItemButton.UseVisualStyleBackColor = true;
+            this.RemoveItemButton.Click += new System.EventHandler(this.RemoveItemButton_Click);
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(3, 554);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(141, 21);
+            this.comboBox1.TabIndex = 17;
+            // 
+            // ButtonAddNewItem
+            // 
+            this.ButtonAddNewItem.Location = new System.Drawing.Point(3, 581);
+            this.ButtonAddNewItem.Name = "ButtonAddNewItem";
+            this.ButtonAddNewItem.Size = new System.Drawing.Size(141, 52);
+            this.ButtonAddNewItem.TabIndex = 18;
+            this.ButtonAddNewItem.Text = "Add new item";
+            this.ButtonAddNewItem.UseVisualStyleBackColor = true;
+            this.ButtonAddNewItem.Click += new System.EventHandler(this.ButtonAddNewItem_Click);
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 15;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // timer2
+            // 
+            this.timer2.Enabled = true;
+            this.timer2.Interval = 1000;
+            this.timer2.Tick += new System.EventHandler(this.Timer2_Tick);
+            // 
+            // SaveSceneButton
+            // 
+            this.SaveSceneButton.Location = new System.Drawing.Point(3, 143);
+            this.SaveSceneButton.Name = "SaveSceneButton";
+            this.SaveSceneButton.Size = new System.Drawing.Size(141, 52);
+            this.SaveSceneButton.TabIndex = 21;
+            this.SaveSceneButton.Text = "Save scene";
+            this.SaveSceneButton.UseVisualStyleBackColor = true;
+            this.SaveSceneButton.Click += new System.EventHandler(this.SaveSceneButton_Click);
+            // 
+            // LoadSceneButton
+            // 
+            this.LoadSceneButton.Location = new System.Drawing.Point(3, 85);
+            this.LoadSceneButton.Name = "LoadSceneButton";
+            this.LoadSceneButton.Size = new System.Drawing.Size(141, 52);
+            this.LoadSceneButton.TabIndex = 22;
+            this.LoadSceneButton.Text = "Load scene";
+            this.LoadSceneButton.UseVisualStyleBackColor = true;
+            this.LoadSceneButton.Click += new System.EventHandler(this.LoadSceneButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1077, 774);
+            this.ClientSize = new System.Drawing.Size(1220, 913);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -247,6 +271,8 @@
         private System.Windows.Forms.Button ButtonAddNewItem;
         private System.Windows.Forms.CheckBox BackfaceCullCheckBox;
         private System.Windows.Forms.CheckBox ZBufferCheckBox;
+        private System.Windows.Forms.Button LoadSceneButton;
+        private System.Windows.Forms.Button SaveSceneButton;
     }
 }
 

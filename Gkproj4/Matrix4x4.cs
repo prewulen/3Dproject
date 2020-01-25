@@ -34,6 +34,68 @@ namespace Gkproj4
             return output;
         }
 
+        static public Matrix4x4 Transpose(Matrix4x4 M)
+        {
+            Matrix4x4 output = new Matrix4x4();
+
+            for (int i = 0; i < 4; i++)
+                for (int j = 0; j < 4; j++)
+                    output.matrix[i, j] = M.matrix[j, i];
+
+            return output;    
+        }
+
+        static public Matrix4x4 Inverse(Matrix4x4 M) //https://stackoverflow.com/questions/1148309/inverting-a-4x4-matrix
+        {
+            var A2323 = M.matrix[2, 2] * M.matrix[3, 3] - M.matrix[2, 3] * M.matrix[3, 2];
+            var A1323 = M.matrix[2, 1] * M.matrix[3, 3] - M.matrix[2, 3] * M.matrix[3, 1];
+            var A1223 = M.matrix[2, 1] * M.matrix[3, 2] - M.matrix[2, 2] * M.matrix[3, 1];
+            var A0323 = M.matrix[2, 0] * M.matrix[3, 3] - M.matrix[2, 3] * M.matrix[3, 0];
+            var A0223 = M.matrix[2, 0] * M.matrix[3, 2] - M.matrix[2, 2] * M.matrix[3, 0];
+            var A0123 = M.matrix[2, 0] * M.matrix[3, 1] - M.matrix[2, 1] * M.matrix[3, 0];
+            var A2313 = M.matrix[1, 2] * M.matrix[3, 3] - M.matrix[1, 3] * M.matrix[3, 2];
+            var A1313 = M.matrix[1, 1] * M.matrix[3, 3] - M.matrix[1, 3] * M.matrix[3, 1];
+            var A1213 = M.matrix[1, 1] * M.matrix[3, 2] - M.matrix[1, 2] * M.matrix[3, 1];
+            var A2312 = M.matrix[1, 2] * M.matrix[2, 3] - M.matrix[1, 3] * M.matrix[2, 2];
+            var A1312 = M.matrix[1, 1] * M.matrix[2, 3] - M.matrix[1, 3] * M.matrix[2, 1];
+            var A1212 = M.matrix[1, 1] * M.matrix[2, 2] - M.matrix[1, 2] * M.matrix[2, 1];
+            var A0313 = M.matrix[1, 0] * M.matrix[3, 3] - M.matrix[1, 3] * M.matrix[3, 0];
+            var A0213 = M.matrix[1, 0] * M.matrix[3, 2] - M.matrix[1, 2] * M.matrix[3, 0];
+            var A0312 = M.matrix[1, 0] * M.matrix[2, 3] - M.matrix[1, 3] * M.matrix[2, 0];
+            var A0212 = M.matrix[1, 0] * M.matrix[2, 2] - M.matrix[1, 2] * M.matrix[2, 0];
+            var A0113 = M.matrix[1, 0] * M.matrix[3, 1] - M.matrix[1, 1] * M.matrix[3, 0];
+            var A0112 = M.matrix[1, 0] * M.matrix[2, 1] - M.matrix[1, 1] * M.matrix[2, 0];
+
+            var det = M.matrix[0, 0] * (M.matrix[1, 1] * A2323 - M.matrix[1, 2] * A1323 + M.matrix[1, 3] * A1223)
+                - M.matrix[0, 1] * (M.matrix[1, 0] * A2323 - M.matrix[1, 2] * A0323 + M.matrix[1, 3] * A0223)
+                + M.matrix[0, 2] * (M.matrix[1, 0] * A1323 - M.matrix[1, 1] * A0323 + M.matrix[1, 3] * A0123)
+                - M.matrix[0, 3] * (M.matrix[1, 0] * A1223 - M.matrix[1, 1] * A0223 + M.matrix[1, 2] * A0123);
+            det = 1 / det;
+            return new Matrix4x4(new double[,] {
+                { det * (M.matrix[1, 1] * A2323 - M.matrix[1, 2] * A1323 + M.matrix[1, 3] * A1223),
+                 det * -(M.matrix[0, 1] * A2323 - M.matrix[0, 2] * A1323 + M.matrix[0, 3] * A1223),
+                 det * (M.matrix[0, 1] * A2313 - M.matrix[0, 2] * A1313 + M.matrix[0, 3] * A1213),
+                 det * -(M.matrix[0, 1] * A2312 - M.matrix[0, 2] * A1312 + M.matrix[0, 3] * A1212) },
+
+                {
+                det * -(M.matrix[1, 0] * A2323 - M.matrix[1, 2] * A0323 + M.matrix[1, 3] * A0223),
+                 det * (M.matrix[0, 0] * A2323 - M.matrix[0, 2] * A0323 + M.matrix[0, 3] * A0223),
+                 det * -(M.matrix[0, 0] * A2313 - M.matrix[0, 2] * A0313 + M.matrix[0, 3] * A0213),
+                 det * (M.matrix[0, 0] * A2312 - M.matrix[0, 2] * A0312 + M.matrix[0, 3] * A0212) },
+
+                {
+                det * (M.matrix[1, 0] * A1323 - M.matrix[1, 1] * A0323 + M.matrix[1, 3] * A0123),
+                 det * -(M.matrix[0, 0] * A1323 - M.matrix[0, 1] * A0323 + M.matrix[0, 3] * A0123),
+                 det * (M.matrix[0, 0] * A1313 - M.matrix[0, 1] * A0313 + M.matrix[0, 3] * A0113),
+                 det * -(M.matrix[0, 0] * A1312 - M.matrix[0, 1] * A0312 + M.matrix[0, 3] * A0112) },
+
+                {
+                det * -(M.matrix[1, 0] * A1223 - M.matrix[1, 1] * A0223 + M.matrix[1, 2] * A0123),
+                 det * (M.matrix[0, 0] * A1223 - M.matrix[0, 1] * A0223 + M.matrix[0, 2] * A0123),
+                 det * -(M.matrix[0, 0] * A1213 - M.matrix[0, 1] * A0213 + M.matrix[0, 2] * A0113),
+                 det * (M.matrix[0, 0] * A1212 - M.matrix[0, 1] * A0212 + M.matrix[0, 2] * A0112) }});
+        }
+
         static public Vector4 MultiplyV(Matrix4x4 Left, Vector4 Right)
         {
             Vector4 output = new Vector4();
@@ -56,11 +118,11 @@ namespace Gkproj4
                 for (int j = 0; j < 4; j++)
                     output.matrix[i, j] = 0;
 
-            double ctg = 1 / Math.Tan(fov / 2);
+            double ctg =(Math.Cos(fov / 2) / Math.Sin(fov / 2));
             output.matrix[0, 0] = ctg / aspect;
             output.matrix[1, 1] = ctg;
             output.matrix[2, 2] = -(far + near) / (far - near);
-            output.matrix[2, 3] = (2D * far * near) / (far - near);
+            output.matrix[2, 3] = -(2D * far * near) / (far - near);
             output.matrix[3, 2] = -1D;
 
             return output;

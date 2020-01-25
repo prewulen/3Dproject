@@ -84,20 +84,24 @@ namespace Gkproj4
             this.x3NMV = x3NMV;
         }
 
-        public void Multiply(Matrix4x4 m)
+        public Triangle()
+        { }
+
+        public void Multiply(Matrix4x4 m, Matrix4x4 M)
         {
+            Matrix4x4 mTI = Matrix4x4.Inverse(Matrix4x4.Transpose(M));
             x1 = Matrix4x4.MultiplyV(m, x1);
-            x1N = Matrix4x4.MultiplyV(m, x1N);
-            x1T = Matrix4x4.MultiplyV(m, x1T);
-            x1B = Matrix4x4.MultiplyV(m, x1B);
+            x1N = Matrix4x4.MultiplyV(mTI, x1N);
+            x1T = Matrix4x4.MultiplyV(mTI, x1T);
+            x1B = Matrix4x4.MultiplyV(mTI, x1B);
             x2 = Matrix4x4.MultiplyV(m, x2);
-            x2N = Matrix4x4.MultiplyV(m, x2N);
-            x2T = Matrix4x4.MultiplyV(m, x2T);
-            x2B = Matrix4x4.MultiplyV(m, x2B);
+            x2N = Matrix4x4.MultiplyV(mTI, x2N);
+            x2T = Matrix4x4.MultiplyV(mTI, x2T);
+            x2B = Matrix4x4.MultiplyV(mTI, x2B);
             x3 = Matrix4x4.MultiplyV(m, x3);
-            x3N = Matrix4x4.MultiplyV(m, x3N);
-            x3T = Matrix4x4.MultiplyV(m, x3T);
-            x3B = Matrix4x4.MultiplyV(m, x3B);
+            x3N = Matrix4x4.MultiplyV(mTI, x3N);
+            x3T = Matrix4x4.MultiplyV(mTI, x3T);
+            x3B = Matrix4x4.MultiplyV(mTI, x3B);
             x1N.Normalize();
             x1T.Normalize();
             x1B.Normalize();
@@ -107,6 +111,41 @@ namespace Gkproj4
             x3N.Normalize();
             x3T.Normalize();
             x3B.Normalize();
+        }
+        public void Multiply(Matrix4x4 m)
+        {
+            x1 = Matrix4x4.MultiplyV(m, x1);
+            x2 = Matrix4x4.MultiplyV(m, x2);
+            x3 = Matrix4x4.MultiplyV(m, x3);
+        }
+
+        public Triangle Copy()
+        {
+            Triangle T = new Triangle();
+            T.x1 = x1.Copy();
+            T.x1N = x1N.Copy();
+            T.x1T = x1T.Copy();
+            T.x1B = x1B.Copy();
+            T.x1NMV = x1NMV.Copy();
+            T.x1TC = x1TC.Copy();
+            T.x1Color = x1Color;
+
+            T.x2 = x2.Copy();
+            T.x2N = x2N.Copy();
+            T.x2T = x2T.Copy();
+            T.x2B = x2B.Copy();
+            T.x2NMV = x2NMV.Copy();
+            T.x2TC = x2TC.Copy();
+            T.x2Color = x2Color;
+
+            T.x3 = x3.Copy();
+            T.x3N = x3N.Copy();
+            T.x3T = x3T.Copy();
+            T.x3B = x3B.Copy();
+            T.x3NMV = x3NMV.Copy();
+            T.x3TC = x3TC.Copy();
+            T.x3Color = x3Color;
+            return T;
         }
     }
 }
