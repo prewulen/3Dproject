@@ -45,27 +45,27 @@ namespace Gkproj4
             Camera C = new Camera(new Vector4(0, 5, 2, 1), new Vector4(0, 0, 0, 1), null);
             SceneObjectList.Add(C);
             listBox1.Items.Add(C);
-            Camera C1 = new Camera(new Vector4(0, 8, 1, 1), new Vector4(0, 0, 0, 1), null);
-            SceneObjectList.Add(C1);
-            listBox1.Items.Add(C1);
-            Camera C2 = new Camera(new Vector4(8, 0, 0, 1), new Vector4(0, 0, 0, 1), null);
-            SceneObjectList.Add(C2);
-            listBox1.Items.Add(C2);
-            Camera C3 = new Camera(new Vector4(3, 0, 0, 1), new Vector4(0, 0, 0, 1), null);
-            SceneObjectList.Add(C3);
-            listBox1.Items.Add(C3);
-            Light L1 = new Light(new Vector4(1,1,1, 1), Color.White, 1, 1);
-            SceneObjectList.Add(L1);
-            listBox1.Items.Add(L1);
             SelectedCamera = C;
+            //Camera C1 = new Camera(new Vector4(0, 8, 1, 1), new Vector4(0, 0, 0, 1), null);
+            //SceneObjectList.Add(C1);
+            //listBox1.Items.Add(C1);
+            //Camera C2 = new Camera(new Vector4(8, 0, 0, 1), new Vector4(0, 0, 0, 1), null);
+            //SceneObjectList.Add(C2);
+            //listBox1.Items.Add(C2);
+            //Camera C3 = new Camera(new Vector4(3, 0, 0, 1), new Vector4(0, 0, 0, 1), null);
+            //SceneObjectList.Add(C3);
+            //listBox1.Items.Add(C3);
+            //Light L1 = new Light(new Vector4(1,1,1, 1), Color.White, 1, 1);
+            //SceneObjectList.Add(L1);
+            //listBox1.Items.Add(L1);
             //Cuboid Cb = new Cuboid(new Vector4(0, 0, 0, 1), new Vector4(0, 0, 0, 0), 1, 1, 1.5, 1);
             //SceneObjectList.Add(Cb);
             //Cuboid Cb1 = new Cuboid(new Vector4(0, 0, 0, 1), new Vector4(0, 0, 0, 0), 1, 1, 1, 1);
             //SceneObjectList.Add(Cb1);
             //listBox1.Items.Add(Cb1);
-            Sphere s = new Sphere(new Vector4(0, 0, 1, 1), 1, 15, 15);
-            SceneObjectList.Add(s);
-            listBox1.Items.Add(s);
+            //Sphere s = new Sphere(new Vector4(0, 0, 1, 1), 1, 15, 15);
+            //SceneObjectList.Add(s);
+            //listBox1.Items.Add(s);
             //Sphere s1 = new Sphere(new Vector4(0, 0, 0, 1), 1, 15, 15);
             //SceneObjectList.Add(s1);
             //listBox1.Items.Add(s1);
@@ -86,7 +86,7 @@ namespace Gkproj4
 
             listBox1.SelectedIndex = 0;
 
-            TextureMap = Properties.Resources.text;
+            TextureMap = Properties.Resources.checkers;
             BumpMap = Properties.Resources.NormalMap;
             //Polygon p = new Polygon();
             //p.Add(new Point(500, 500));
@@ -653,7 +653,7 @@ namespace Gkproj4
             }
         }
         
-        void FillPoly(Polygon p, Triangle T, List<Vector4> LV, Bitmap TextureMap, Bitmap BumpMap)
+        void FillPoly(Polygon p, Triangle T, List<Vector4> LV)
         {
             List<Vector4> VerticeVector = new List<Vector4>();
             VerticeVector.Add(T.x1);
@@ -972,14 +972,24 @@ namespace Gkproj4
             return Left * ratio2 + Right * ratio;
         }
 
-        void FillPolyWithoutZBuf(Polygon p, Triangle T, Bitmap TextureMap, Bitmap BumpMap)
+        void FillPolyWithoutZBuf(Polygon p, Triangle T, List<Vector4> LV)
         {
-
-
-            List<Color> VerticeColor = new List<Color>();
-            VerticeColor.Add(T.x1Color);
-            VerticeColor.Add(T.x2Color);
-            VerticeColor.Add(T.x3Color);
+            List<Vector4> VerticeVector = new List<Vector4>();
+            VerticeVector.Add(T.x1);
+            VerticeVector.Add(T.x2);
+            VerticeVector.Add(T.x3);
+            VerticeVector.Add(T.x1N);//+3
+            VerticeVector.Add(T.x2N);
+            VerticeVector.Add(T.x3N);
+            VerticeVector.Add(T.x1T);//+6
+            VerticeVector.Add(T.x2T);
+            VerticeVector.Add(T.x3T);
+            VerticeVector.Add(T.x1B);//+9
+            VerticeVector.Add(T.x2B);
+            VerticeVector.Add(T.x3B);
+            VerticeVector.Add(T.x1TC);//+12
+            VerticeVector.Add(T.x2TC);
+            VerticeVector.Add(T.x3TC);
 
             EdgePointer[] ET = new EdgePointer[2000];
             int ymin, ymax, x, ystart = p.points[0].Y;
@@ -1030,31 +1040,107 @@ namespace Gkproj4
                     pty = pty.next;
                     count--;
                 }
-                AET.Sort((x1, x2) => (int)(x1.x - x2.x));
+                AET.Sort((x1, x2) => (x1.x - x2.x) > 0 ? 1 : -1);
                 for (int i = 0; i < AET.Count; i += 2)
                 {
-                    int xa1 = (int)AET[i].x + 1;
+                    int xa1 = (int)AET[i].x;
                     int xa2 = (int)AET[i + 1].x;
+                    if (xa1 < 0) xa1 = 0;
+                    if (xa2 < 0) continue;
+                    if (xa1 >= DrawArea.Width) continue;
+                    if (xa2 >= DrawArea.Width) xa2 = DrawArea.Width - 1;
+                    double z1 = -InterpolateZBuf(p.points[AET[i].p1], p.points[AET[i].p2], xa1, ystart + 1, VerticeVector[AET[i].p1].vector[2], VerticeVector[AET[i].p2].vector[2]);
+                    double z2 = -InterpolateZBuf(p.points[AET[i + 1].p1], p.points[AET[i + 1].p2], xa2, ystart + 1, VerticeVector[AET[i + 1].p1].vector[2], VerticeVector[AET[i + 1].p2].vector[2]);
 
-                    Color Left = InterpolateColor(p.points[AET[i].p1], p.points[AET[i].p2], xa1, ystart + 1, VerticeColor[AET[i].p1], VerticeColor[AET[i].p2]);
-                    Color Right = InterpolateColor(p.points[AET[i + 1].p1], p.points[AET[i + 1].p2], xa2, ystart + 1, VerticeColor[AET[i + 1].p1], VerticeColor[AET[i + 1].p2]);
-                  
-                    DrawPixel(xa1, ystart, Left);
-             
-                    DrawPixel(xa2, ystart, Right);
+                    Vector4 LeftV;
+                    Vector4 RightV;
+                    Vector4 LeftVN;
+                    Vector4 RightVN;
+                    Vector4 LeftVT;
+                    Vector4 RightVT;
+                    Vector4 LeftVB;
+                    Vector4 RightVB;
+                    Vector4 LeftVTC;
+                    Vector4 RightVTC;
+                    double wcLeft = 1;
+                    double wcRight = 1;
+                    if (PerspectiveCorrectionCheckbox.Checked)
+                    {
+                        wcLeft = InterpolateZBuf(p.points[AET[i].p1], p.points[AET[i].p2], xa1, ystart + 1, VerticeVector[AET[i].p1].vector[3], VerticeVector[AET[i].p2].vector[3]);
+                        wcRight = InterpolateZBuf(p.points[AET[i + 1].p1], p.points[AET[i + 1].p2], xa2, ystart + 1, VerticeVector[AET[i + 1].p1].vector[3], VerticeVector[AET[i + 1].p2].vector[3]);
+                        LeftV = InterpolateVectorPC(p.points[AET[i].p1], p.points[AET[i].p2], xa1, ystart + 1, LV[AET[i].p1], LV[AET[i].p2], VerticeVector[AET[i].p1].vector[3], VerticeVector[AET[i].p2].vector[3]);
+                        RightV = InterpolateVectorPC(p.points[AET[i + 1].p1], p.points[AET[i + 1].p2], xa2, ystart + 1, LV[AET[i + 1].p1], LV[AET[i + 1].p2], VerticeVector[AET[i + 1].p1].vector[3], VerticeVector[AET[i + 1].p2].vector[3]);
+                        LeftVN = InterpolateVectorNPC(p.points[AET[i].p1], p.points[AET[i].p2], xa1, ystart + 1, VerticeVector[AET[i].p1 + 3], VerticeVector[AET[i].p2 + 3], VerticeVector[AET[i].p1].vector[3], VerticeVector[AET[i].p2].vector[3]);
+                        RightVN = InterpolateVectorNPC(p.points[AET[i + 1].p1], p.points[AET[i + 1].p2], xa2, ystart + 1, VerticeVector[AET[i + 1].p1 + 3], VerticeVector[AET[i + 1].p2 + 3], VerticeVector[AET[i + 1].p1].vector[3], VerticeVector[AET[i + 1].p2].vector[3]);
+                        LeftVT = InterpolateVectorNPC(p.points[AET[i].p1], p.points[AET[i].p2], xa1, ystart + 1, VerticeVector[AET[i].p1 + 6], VerticeVector[AET[i].p2 + 6], VerticeVector[AET[i].p1].vector[3], VerticeVector[AET[i].p2].vector[3]);
+                        RightVT = InterpolateVectorNPC(p.points[AET[i + 1].p1], p.points[AET[i + 1].p2], xa2, ystart + 1, VerticeVector[AET[i + 1].p1 + 6], VerticeVector[AET[i + 1].p2 + 6], VerticeVector[AET[i + 1].p1].vector[3], VerticeVector[AET[i + 1].p2].vector[3]);
+                        LeftVB = InterpolateVectorNPC(p.points[AET[i].p1], p.points[AET[i].p2], xa1, ystart + 1, VerticeVector[AET[i].p1 + 9], VerticeVector[AET[i].p2 + 9], VerticeVector[AET[i].p1].vector[3], VerticeVector[AET[i].p2].vector[3]);
+                        RightVB = InterpolateVectorNPC(p.points[AET[i + 1].p1], p.points[AET[i + 1].p2], xa2, ystart + 1, VerticeVector[AET[i + 1].p1 + 9], VerticeVector[AET[i + 1].p2 + 9], VerticeVector[AET[i + 1].p1].vector[3], VerticeVector[AET[i + 1].p2].vector[3]);
+                        LeftVTC = InterpolateVectorPC(p.points[AET[i].p1], p.points[AET[i].p2], xa1, ystart + 1, VerticeVector[AET[i].p1 + 12], VerticeVector[AET[i].p2 + 12], VerticeVector[AET[i].p1].vector[3], VerticeVector[AET[i].p2].vector[3]);
+                        RightVTC = InterpolateVectorPC(p.points[AET[i + 1].p1], p.points[AET[i + 1].p2], xa2, ystart + 1, VerticeVector[AET[i + 1].p1 + 12], VerticeVector[AET[i + 1].p2 + 12], VerticeVector[AET[i + 1].p1].vector[3], VerticeVector[AET[i + 1].p2].vector[3]);
+                    }
+                    else
+                    {
+                        LeftV = InterpolateVector(p.points[AET[i].p1], p.points[AET[i].p2], xa1, ystart + 1, LV[AET[i].p1], LV[AET[i].p2]);
+                        RightV = InterpolateVector(p.points[AET[i + 1].p1], p.points[AET[i + 1].p2], xa2, ystart + 1, LV[AET[i + 1].p1], LV[AET[i + 1].p2]);
+                        LeftVN = InterpolateVectorN(p.points[AET[i].p1], p.points[AET[i].p2], xa1, ystart + 1, VerticeVector[AET[i].p1 + 3], VerticeVector[AET[i].p2 + 3]);
+                        RightVN = InterpolateVectorN(p.points[AET[i + 1].p1], p.points[AET[i + 1].p2], xa2, ystart + 1, VerticeVector[AET[i + 1].p1 + 3], VerticeVector[AET[i + 1].p2 + 3]);
+                        LeftVT = InterpolateVectorN(p.points[AET[i].p1], p.points[AET[i].p2], xa1, ystart + 1, VerticeVector[AET[i].p1 + 6], VerticeVector[AET[i].p2 + 6]);
+                        RightVT = InterpolateVectorN(p.points[AET[i + 1].p1], p.points[AET[i + 1].p2], xa2, ystart + 1, VerticeVector[AET[i + 1].p1 + 6], VerticeVector[AET[i + 1].p2 + 6]);
+                        LeftVB = InterpolateVectorN(p.points[AET[i].p1], p.points[AET[i].p2], xa1, ystart + 1, VerticeVector[AET[i].p1 + 9], VerticeVector[AET[i].p2 + 9]);
+                        RightVB = InterpolateVectorN(p.points[AET[i + 1].p1], p.points[AET[i + 1].p2], xa2, ystart + 1, VerticeVector[AET[i + 1].p1 + 9], VerticeVector[AET[i + 1].p2 + 9]);
+                        LeftVTC = InterpolateVector(p.points[AET[i].p1], p.points[AET[i].p2], xa1, ystart + 1, VerticeVector[AET[i].p1 + 12], VerticeVector[AET[i].p2 + 12]);
+                        RightVTC = InterpolateVector(p.points[AET[i + 1].p1], p.points[AET[i + 1].p2], xa2, ystart + 1, VerticeVector[AET[i + 1].p1 + 12], VerticeVector[AET[i + 1].p2 + 12]);
+                    }
+                    //------------------------------------------------------------------
+                        DrawPixel(xa1, ystart + 1, GetColor(LeftV, LeftVN, LeftVT, LeftVB, LeftVTC));
+                        ZBuffer[xa1, ystart + 1] = z1;
+                    
+
+                        DrawPixel(xa2, ystart + 1, GetColor(RightV, RightVN, RightVT, RightVB, RightVTC));
+                        ZBuffer[xa2, ystart + 1] = z2;
+                    
 
                     for (int j = xa1 + 1; j < xa2; j++)
                     {
-                        DrawPixel(j, ystart, InterpolateColorL(xa1, xa2, j, Left, Right));
+                        if (PerspectiveCorrectionCheckbox.Checked)
+                        {
+                            
+                                //DrawPixel(j, ystart + 1, InterpolateColorL(xa1, xa2, j, Left, Right));
+                                //ZBuffer[j, ystart + 1] = InterpolateZBufL(xa1, xa2, j, z1, z2);
+                                DrawPixel(j, ystart + 1, GetColor(
+                                    InterpolateVectorPCL(xa1, xa2, j, LeftV, RightV, wcLeft, wcRight),
+                                    InterpolateVectorNPCL(xa1, xa2, j, LeftVN, RightVN, wcLeft, wcRight),
+                                    InterpolateVectorNPCL(xa1, xa2, j, LeftVT, RightVT, wcLeft, wcRight),
+                                    InterpolateVectorNPCL(xa1, xa2, j, LeftVB, RightVB, wcLeft, wcRight),
+                                    InterpolateVectorPCL(xa1, xa2, j, LeftVTC, RightVTC, wcLeft, wcRight)
+                                    ));
+                                ZBuffer[j, ystart + 1] = InterpolateZBufL(xa1, xa2, j, z1, z2);
+                            
+                        }
+                        else
+                        {
+                           
+                                //DrawPixel(j, ystart + 1, InterpolateColorL(xa1, xa2, j, Left, Right));
+                                //ZBuffer[j, ystart + 1] = InterpolateZBufL(xa1, xa2, j, z1, z2);
+                                DrawPixel(j, ystart + 1, GetColor(
+                                    InterpolateVectorL(xa1, xa2, j, LeftV, RightV),
+                                    InterpolateVectorNL(xa1, xa2, j, LeftVN, RightVN),
+                                    InterpolateVectorNL(xa1, xa2, j, LeftVT, RightVT),
+                                    InterpolateVectorNL(xa1, xa2, j, LeftVB, RightVB),
+                                    InterpolateVectorL(xa1, xa2, j, LeftVTC, RightVTC)
+                                    ));
+                                ZBuffer[j, ystart + 1] = InterpolateZBufL(xa1, xa2, j, z1, z2);
+                           
+                        }
                     }
-
                 }
                 ystart++;
-                AET.RemoveAll(x1 => x1.ymax == ystart);
                 foreach (var e in AET)
                 {
                     e.x += e.m;
                 }
+                AET.RemoveAll(x1 => x1.ymax == ystart);
             }
         }
 
@@ -1376,9 +1462,9 @@ namespace Gkproj4
             //Console.WriteLine(asdafa + v3.vector[2]);
 
             if (ZBufferCheckBox.Checked)
-                FillPoly(p, t, LV, null, null);
+                FillPoly(p, t, LV);
             else
-                FillPolyWithoutZBuf(p, t, null, null);
+                FillPolyWithoutZBuf(p, t, LV);
 
         }
         private void DrawLightVertice(SceneObject S, Matrix4x4 M)
@@ -2108,11 +2194,11 @@ namespace Gkproj4
             }
         }
 
-        private void SaveCamera(Camera c, StreamWriter fw)
+        private void SaveCamera(Camera c, StreamWriter fw) 
         {
-            fw.WriteLine($"0;{c.Position.vector[0]};{c.Position.vector[1]};{c.Position.vector[2]};" +
-                $"{c.Target.vector[0]};{c.Target.vector[1]};{c.Target.vector[2]};" +
-                $"{c.UpWorld.vector[0]};{c.UpWorld.vector[1]};{c.UpWorld.vector[2]};" +
+            fw.WriteLine($"0;{c.Position.vector[0].ToString()};{c.Position.vector[1].ToString()};{c.Position.vector[2].ToString()};" +
+                $"{c.Target.vector[0].ToString()};{c.Target.vector[1].ToString()};{c.Target.vector[2].ToString()};" +
+                $"{c.UpWorld.vector[0].ToString()};{c.UpWorld.vector[1].ToString()};{c.UpWorld.vector[2].ToString()};" +
                 $"{c.fov};{c.AspectRatio};{c.NearPlaneDistance};{c.FarPlaneDistance}");
         }
         private void SaveLight(Light c, StreamWriter fw)
@@ -2234,6 +2320,8 @@ namespace Gkproj4
             c.AspectRatio = Convert.ToDouble(s[11]);
             c.NearPlaneDistance = Convert.ToDouble(s[12]);
             c.FarPlaneDistance = Convert.ToDouble(s[13]);
+            SceneObjectList.Add(c);
+            listBox1.Items.Add(c);
         }
         private void LoadLight(string line)
         {
