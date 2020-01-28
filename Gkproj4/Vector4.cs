@@ -61,6 +61,10 @@ namespace Gkproj4
         {
             return new Vector4(a.vector[0] - b.vector[0], a.vector[1] - b.vector[1], a.vector[2] - b.vector[2], 0);
         }
+        public static Vector4 operator- (Vector4 a)
+        {
+            return new Vector4(-a.vector[0],-a.vector[1],-a.vector[2],-a.vector[3]);
+        }
 
         public static Vector4 operator+ (Vector4 a, Vector4 b)
         {
@@ -69,6 +73,10 @@ namespace Gkproj4
         public static Vector4 operator* (Vector4 a, double b)
         {
             return new Vector4(a.vector[0] * b, a.vector[1] * b, a.vector[2] * b, a.vector[3] * b);
+        }
+        public static Vector4 operator/ (Vector4 a, double b)
+        {
+            return new Vector4(a.vector[0] / b, a.vector[1] / b, a.vector[2] / b, a.vector[3] / b);
         }
         public Vector4 Copy()
         {

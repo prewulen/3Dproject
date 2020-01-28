@@ -36,6 +36,8 @@
             this.BackfaceCullCheckBox = new System.Windows.Forms.CheckBox();
             this.ZBufferCheckBox = new System.Windows.Forms.CheckBox();
             this.LineFillCheckbox = new System.Windows.Forms.CheckBox();
+            this.LoadSceneButton = new System.Windows.Forms.Button();
+            this.SaveSceneButton = new System.Windows.Forms.Button();
             this.ButtonDraw3D = new System.Windows.Forms.Button();
             this.ButtonStart = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
@@ -45,8 +47,7 @@
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
-            this.SaveSceneButton = new System.Windows.Forms.Button();
-            this.LoadSceneButton = new System.Windows.Forms.Button();
+            this.PerspectiveCorrectionCheckbox = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -91,6 +92,7 @@
             this.flowLayoutPanel1.Controls.Add(this.labelFps);
             this.flowLayoutPanel1.Controls.Add(this.BackfaceCullCheckBox);
             this.flowLayoutPanel1.Controls.Add(this.ZBufferCheckBox);
+            this.flowLayoutPanel1.Controls.Add(this.PerspectiveCorrectionCheckbox);
             this.flowLayoutPanel1.Controls.Add(this.LineFillCheckbox);
             this.flowLayoutPanel1.Controls.Add(this.LoadSceneButton);
             this.flowLayoutPanel1.Controls.Add(this.SaveSceneButton);
@@ -143,16 +145,36 @@
             this.LineFillCheckbox.AutoSize = true;
             this.LineFillCheckbox.Checked = true;
             this.LineFillCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.LineFillCheckbox.Location = new System.Drawing.Point(3, 62);
+            this.LineFillCheckbox.Location = new System.Drawing.Point(3, 85);
             this.LineFillCheckbox.Name = "LineFillCheckbox";
             this.LineFillCheckbox.Size = new System.Drawing.Size(136, 17);
             this.LineFillCheckbox.TabIndex = 15;
             this.LineFillCheckbox.Text = "Draw lines instead of fill";
             this.LineFillCheckbox.UseVisualStyleBackColor = true;
             // 
+            // LoadSceneButton
+            // 
+            this.LoadSceneButton.Location = new System.Drawing.Point(3, 108);
+            this.LoadSceneButton.Name = "LoadSceneButton";
+            this.LoadSceneButton.Size = new System.Drawing.Size(141, 52);
+            this.LoadSceneButton.TabIndex = 22;
+            this.LoadSceneButton.Text = "Load scene";
+            this.LoadSceneButton.UseVisualStyleBackColor = true;
+            this.LoadSceneButton.Click += new System.EventHandler(this.LoadSceneButton_Click);
+            // 
+            // SaveSceneButton
+            // 
+            this.SaveSceneButton.Location = new System.Drawing.Point(3, 166);
+            this.SaveSceneButton.Name = "SaveSceneButton";
+            this.SaveSceneButton.Size = new System.Drawing.Size(141, 52);
+            this.SaveSceneButton.TabIndex = 21;
+            this.SaveSceneButton.Text = "Save scene";
+            this.SaveSceneButton.UseVisualStyleBackColor = true;
+            this.SaveSceneButton.Click += new System.EventHandler(this.SaveSceneButton_Click);
+            // 
             // ButtonDraw3D
             // 
-            this.ButtonDraw3D.Location = new System.Drawing.Point(3, 201);
+            this.ButtonDraw3D.Location = new System.Drawing.Point(3, 224);
             this.ButtonDraw3D.Name = "ButtonDraw3D";
             this.ButtonDraw3D.Size = new System.Drawing.Size(141, 52);
             this.ButtonDraw3D.TabIndex = 10;
@@ -162,7 +184,7 @@
             // 
             // ButtonStart
             // 
-            this.ButtonStart.Location = new System.Drawing.Point(3, 259);
+            this.ButtonStart.Location = new System.Drawing.Point(3, 282);
             this.ButtonStart.Name = "ButtonStart";
             this.ButtonStart.Size = new System.Drawing.Size(141, 52);
             this.ButtonStart.TabIndex = 12;
@@ -173,7 +195,7 @@
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(3, 317);
+            this.listBox1.Location = new System.Drawing.Point(3, 340);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(141, 173);
             this.listBox1.TabIndex = 14;
@@ -181,7 +203,7 @@
             // 
             // RemoveItemButton
             // 
-            this.RemoveItemButton.Location = new System.Drawing.Point(3, 496);
+            this.RemoveItemButton.Location = new System.Drawing.Point(3, 519);
             this.RemoveItemButton.Name = "RemoveItemButton";
             this.RemoveItemButton.Size = new System.Drawing.Size(141, 52);
             this.RemoveItemButton.TabIndex = 16;
@@ -192,14 +214,14 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(3, 554);
+            this.comboBox1.Location = new System.Drawing.Point(3, 577);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(141, 21);
             this.comboBox1.TabIndex = 17;
             // 
             // ButtonAddNewItem
             // 
-            this.ButtonAddNewItem.Location = new System.Drawing.Point(3, 581);
+            this.ButtonAddNewItem.Location = new System.Drawing.Point(3, 604);
             this.ButtonAddNewItem.Name = "ButtonAddNewItem";
             this.ButtonAddNewItem.Size = new System.Drawing.Size(141, 52);
             this.ButtonAddNewItem.TabIndex = 18;
@@ -218,25 +240,17 @@
             this.timer2.Interval = 1000;
             this.timer2.Tick += new System.EventHandler(this.Timer2_Tick);
             // 
-            // SaveSceneButton
+            // PerspectiveCorrectionCheckbox
             // 
-            this.SaveSceneButton.Location = new System.Drawing.Point(3, 143);
-            this.SaveSceneButton.Name = "SaveSceneButton";
-            this.SaveSceneButton.Size = new System.Drawing.Size(141, 52);
-            this.SaveSceneButton.TabIndex = 21;
-            this.SaveSceneButton.Text = "Save scene";
-            this.SaveSceneButton.UseVisualStyleBackColor = true;
-            this.SaveSceneButton.Click += new System.EventHandler(this.SaveSceneButton_Click);
-            // 
-            // LoadSceneButton
-            // 
-            this.LoadSceneButton.Location = new System.Drawing.Point(3, 85);
-            this.LoadSceneButton.Name = "LoadSceneButton";
-            this.LoadSceneButton.Size = new System.Drawing.Size(141, 52);
-            this.LoadSceneButton.TabIndex = 22;
-            this.LoadSceneButton.Text = "Load scene";
-            this.LoadSceneButton.UseVisualStyleBackColor = true;
-            this.LoadSceneButton.Click += new System.EventHandler(this.LoadSceneButton_Click);
+            this.PerspectiveCorrectionCheckbox.AutoSize = true;
+            this.PerspectiveCorrectionCheckbox.Checked = true;
+            this.PerspectiveCorrectionCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.PerspectiveCorrectionCheckbox.Location = new System.Drawing.Point(3, 62);
+            this.PerspectiveCorrectionCheckbox.Name = "PerspectiveCorrectionCheckbox";
+            this.PerspectiveCorrectionCheckbox.Size = new System.Drawing.Size(132, 17);
+            this.PerspectiveCorrectionCheckbox.TabIndex = 23;
+            this.PerspectiveCorrectionCheckbox.Text = "Prespective correction";
+            this.PerspectiveCorrectionCheckbox.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -273,6 +287,7 @@
         private System.Windows.Forms.CheckBox ZBufferCheckBox;
         private System.Windows.Forms.Button LoadSceneButton;
         private System.Windows.Forms.Button SaveSceneButton;
+        private System.Windows.Forms.CheckBox PerspectiveCorrectionCheckbox;
     }
 }
 
