@@ -1,7 +1,7 @@
 # 3Dproject
 Projekt realizujący wyświetlanie grafiki 3D w aplikacji WinForms.
 ![obraz](https://user-images.githubusercontent.com/56601065/119562933-361d2580-bda7-11eb-84a9-c64dad3682a8.png)
-![obraz](https://user-images.githubusercontent.com/56601065/119562985-47663200-bda7-11eb-988d-4c0c38bdcad5.png)
+![obraz](https://user-images.githubusercontent.com/56601065/119563495-e7bc5680-bda7-11eb-945a-0daaa97ade8d.png)
 
 --Instrukcja obslugi--
 
